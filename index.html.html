@@ -1,0 +1,1998 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>ぽこあ Pokopia — Game Companion</title>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700;900&family=Comic+Relief&family=Kosugi+Maru&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   ROOT & RESET
+───────────────────────────────────────── */
+:root {
+  --green-dark:   #3d7a35;
+  --green-mid:    #62a855;
+  --green-light:  #a8d87a;
+  --green-pale:   #dff0c8;
+  --yellow:       #f7d84a;
+  --yellow-pale:  #fef8dc;
+  --orange:       #f5a030;
+  --orange-pale:  #feecd0;
+  --red:          #e85050;
+  --red-pale:     #fde0e0;
+  --purple:       #b088e0;
+  --purple-dark:  #7a50b8;
+  --purple-pale:  #f0e8ff;
+  --purple-ditto: #e8d8f8;
+  --pink:         #f0b8d0;
+  --brown:        #a06830;
+  --cream:        #fdf8ee;
+  --card-bg:      #fffdf5;
+  --border:       rgba(160,130,60,0.18);
+  --shadow:       rgba(80,60,20,0.13);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { font-size: 16px; }
+body {
+  font-family: 'Comic Relief', 'Kosugi Maru', 'Zen Maru Gothic', sans-serif;
+  background: #d4edaa;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ── Animated background ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 20%, #c8e898 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, #b8e070 0%, transparent 55%),
+    radial-gradient(ellipse 50% 50% at 50% 50%, #d8f0a8 0%, transparent 70%);
+  pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(90,150,50,0.10) 1.5px, transparent 1.5px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+/* ─────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────── */
+.app {
+  position: relative; z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 0 0 48px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ─────────────────────────────────────────
+   HEADER
+───────────────────────────────────────── */
+.header {
+  background: linear-gradient(160deg, #4a9a40 0%, #62b855 100%);
+  padding: 18px 20px 16px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(50,100,30,0.25);
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 12px,
+    rgba(255,255,255,0.05) 12px,
+    rgba(255,255,255,0.05) 14px
+  );
+}
+.logo-img {
+  max-height: 72px;
+  max-width: 80%;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 4px;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.2));
+}
+.logo-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.logo-placeholder-box {
+  width: 220px;
+  height: 64px;
+  background: rgba(255,255,255,0.18);
+  border: 2px dashed rgba(255,255,255,0.5);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.header-sub {
+  color: rgba(255,255,255,0.88);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ─────────────────────────────────────────
+   TABS
+───────────────────────────────────────── */
+.tabs {
+  display: flex;
+  background: rgba(255,255,255,0.55);
+  border-bottom: 2px solid rgba(255,255,255,0.6);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.tab {
+  flex: 1;
+  padding: 10px 4px 9px;
+  border: none;
+  background: transparent;
+  font-family: 'Comic Relief', 'Kosugi Maru', 'Zen Maru Gothic', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  opacity: 0.6;
+  transition: opacity 0.2s, background 0.2s;
+  border-bottom: 3px solid transparent;
+  position: relative;
+  top: 2px;
+}
+.tab .tab-icon { font-size: 1.2rem; line-height: 1; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+.tab .tab-icon img { width: 24px; height: 24px; object-fit: contain; }
+.tab .tab-jp { font-size: 0.6rem; opacity: 0.8; }
+.tab.active {
+  opacity: 1;
+  background: rgba(255,255,255,0.5);
+  border-bottom-color: var(--green-dark);
+}
+
+/* ─────────────────────────────────────────
+   PANELS
+───────────────────────────────────────── */
+.tab-content { display: none; padding: 16px 14px; }
+.tab-content.active { display: block; }
+
+.panel {
+  background: var(--card-bg);
+  border-radius: 22px;
+  border: 2px solid rgba(255,255,255,0.9);
+  box-shadow: 0 4px 20px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.95);
+  padding: 18px 16px;
+  margin-bottom: 14px;
+}
+.panel-title {
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  color: var(--green-dark);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-title .jp {
+  font-size: 0.75rem;
+  color: var(--brown);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+/* ─────────────────────────────────────────
+   GAUGE TAB
+───────────────────────────────────────── */
+.gauge-hero {
+  text-align: center;
+  padding: 8px 0 16px;
+}
+.gauge-number {
+  font-size: 5rem;
+  font-weight: 900;
+  color: var(--green-dark);
+  line-height: 1;
+  text-shadow: 3px 3px 0 rgba(255,255,255,0.7);
+  transition: transform 0.15s;
+}
+.gauge-number.pop { animation: numPop 0.3s cubic-bezier(.34,1.56,.64,1); }
+@keyframes numPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+.gauge-level-label {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--orange);
+  margin-top: 4px;
+}
+.gauge-level-jp {
+  font-size: 0.82rem;
+  color: var(--brown);
+  opacity: 0.8;
+  margin-top: 2px;
+}
+
+.gauge-track {
+  background: #e0d4a8;
+  border-radius: 50px;
+  height: 32px;
+  position: relative;
+  overflow: hidden;
+  border: 2.5px solid rgba(255,255,255,0.8);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+  margin-bottom: 8px;
+}
+.gauge-fill {
+  height: 100%;
+  border-radius: 50px;
+  transition: width 0.7s cubic-bezier(.34,1.56,.64,1), background 0.6s;
+  position: relative;
+}
+.gauge-fill::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 6px; right: 6px;
+  height: 40%;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50px;
+}
+.gauge-ticks {
+  position: relative;
+  height: 18px;
+  margin-bottom: 14px;
+}
+.gauge-ticks span {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--brown);
+  opacity: 0.7;
+}
+
+.gauge-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.g-btn {
+  padding: 11px 8px;
+  border-radius: 16px;
+  border: 2.5px solid transparent;
+  font-family: 'Comic Relief', 'Kosugi Maru', 'Zen Maru Gothic', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  line-height: 1.2;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+}
+.g-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.12); }
+.g-btn .lbl { font-size: 0.58rem; opacity: 0.75; font-weight: 500; line-height: 1.3; }
+.gb-green  { background: var(--green-pale); color: var(--green-dark); border-color: var(--green-light); box-shadow: 0 4px 0 var(--green-mid); }
+.gb-green:active { box-shadow: 0 1px 0 var(--green-mid); }
+.gb-blue   { background: #d8eef8; color: #1a5a88; border-color: #88c0e0; box-shadow: 0 4px 0 #60a0c8; }
+.gb-blue:active { box-shadow: 0 1px 0 #60a0c8; }
+.gb-orange { background: var(--orange-pale); color: #884010; border-color: var(--orange); box-shadow: 0 4px 0 #d88020; }
+.gb-orange:active { box-shadow: 0 1px 0 #d88020; }
+.gb-yellow { background: var(--yellow-pale); color: #705808; border-color: var(--yellow); box-shadow: 0 4px 0 #d8b820; }
+.gb-yellow:active { box-shadow: 0 1px 0 #d8b820; }
+.gb-purple { background: var(--purple-pale); color: var(--purple-dark); border-color: var(--purple); box-shadow: 0 4px 0 #9060c8; }
+.gb-purple:active { box-shadow: 0 1px 0 #9060c8; }
+.gb-red    { background: var(--red-pale); color: #881010; border-color: var(--red); box-shadow: 0 4px 0 #c83030; }
+.gb-red:active { box-shadow: 0 1px 0 #c83030; }
+
+.reset-row {
+  text-align: center;
+  margin-top: 6px;
+}
+.reset-btn {
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 50px;
+  padding: 8px 22px;
+  font-family: 'Comic Relief', 'Kosugi Maru', 'Zen Maru Gothic', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #aaa;
+  cursor: pointer;
+}
+.reset-btn:active { background: #f5f5f5; }
+
+/* ─────────────────────────────────────────
+   MATERIALS TAB
+───────────────────────────────────────── */
+.player-adjust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.adj-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2.5px solid var(--green-mid);
+  background: var(--green-pale);
+  color: var(--green-dark);
+  font-size: 1.3rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+}
+.adj-btn:active { transform: scale(0.88); }
+.adj-num {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--green-dark);
+  min-width: 32px;
+  text-align: center;
+}
+
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (min-width: 480px) {
+  .players-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+.player-card {
+  background: white;
+  border-radius: 18px;
+  border: 2.5px solid #e8e0d0;
+  padding: 14px 10px 12px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.player-emoji { font-size: 1.4rem; margin-bottom: 2px; }
+.player-name  { font-size: 1rem; font-weight: 900; color: #666; margin-bottom: 6px; }
+.mat-count    { font-size: 3rem; font-weight: 900; color: var(--brown); line-height: 1; text-shadow: 1px 2px 0 rgba(255,255,255,0.9); }
+.mat-label    { font-size: 0.65rem; color: #bbb; margin: 2px 0 8px; }
+.mat-controls { display: flex; gap: 8px; justify-content: center; }
+.mc-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.3rem;
+  font-weight: 900;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.12);
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+.mc-btn:active { transform: translateY(3px); box-shadow: none; }
+.mc-plus  { background: #c8f0a8; color: var(--green-dark); }
+.mc-minus { background: #f8ddb8; color: #884010; }
+.mat-count.pop { animation: numPop 0.25s cubic-bezier(.34,1.56,.64,1); }
+
+/* ─────────────────────────────────────────
+   DITTO CARD TAB
+───────────────────────────────────────── */
+.ditto-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  min-height: 300px;
+  justify-content: center;
+  padding: 8px 0;
+}
+
+/* Card back / draw button */
+.card-draw-btn {
+  position: relative;
+  width: 260px;
+  cursor: pointer;
+  user-select: none;
+}
+.card-draw-btn::before,
+.card-draw-btn::after {
+  content: '';
+  position: absolute;
+  border-radius: 24px;
+  background: #8050b0;
+  border: 3px solid rgba(255,255,255,0.25);
+}
+.card-draw-btn::before { inset: 7px 0 -7px 5px; z-index: 0; opacity: 0.55; }
+.card-draw-btn::after  { inset: 12px 0 -12px 10px; z-index: -1; opacity: 0.3; }
+
+.card-back-face {
+  position: relative;
+  z-index: 1;
+  background: linear-gradient(140deg, #c090e8 0%, #9060c8 100%);
+  border-radius: 24px;
+  border: 3px solid rgba(255,255,255,0.35);
+  padding: 28px 20px 24px;
+  text-align: center;
+  box-shadow: 0 8px 28px rgba(120,60,200,0.28);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.card-draw-btn:active .card-back-face {
+  transform: scale(0.97) translateY(4px);
+  box-shadow: 0 4px 12px rgba(120,60,200,0.2);
+}
+.card-back-face::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1.5px dashed rgba(255,255,255,0.3);
+  border-radius: 18px;
+  pointer-events: none;
+}
+.card-back-icon { font-size: 2.8rem; display: block; margin-bottom: 8px; }
+.card-back-en { color: white; font-weight: 900; font-size: 1rem; text-shadow: 0 1px 4px rgba(0,0,0,0.25); }
+.card-back-jp { color: rgba(255,255,255,0.82); font-size: 0.78rem; margin-top: 4px; }
+.deck-remaining { font-size: 0.68rem; color: #aaa; font-weight: 600; }
+
+/* Active Ditto card */
+.ditto-card {
+  background: var(--card-bg);
+  border-radius: 28px;
+  border: 3px solid var(--purple);
+  box-shadow: 0 10px 36px rgba(140,80,220,0.18), 0 2px 0 rgba(255,255,255,0.9) inset;
+  width: 100%;
+  max-width: 340px;
+  overflow: hidden;
+  animation: cardIn 0.35s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(0.82) translateY(16px) rotate(-2deg); }
+  to   { opacity: 1; transform: scale(1) translateY(0) rotate(0deg); }
+}
+
+.ditto-card-top {
+  background: linear-gradient(135deg, #c090e8 0%, #9868d0 100%);
+  padding: 10px 16px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ditto-card-badge {
+  background: rgba(255,255,255,0.22);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: 50px;
+  padding: 3px 10px;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ditto-card-category {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex: 1;
+  text-align: right;
+}
+
+.ditto-card-body {
+  padding: 20px 20px 0;
+}
+.ditto-card-en {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #2a2030;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+.ditto-card-jp {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--brown);
+  line-height: 1.5;
+  padding: 10px 12px;
+  background: #f8f0e0;
+  border-radius: 14px;
+  margin-bottom: 14px;
+}
+
+.ditto-card-effect {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+.effect-plus   { background: var(--green-pale); color: var(--green-dark); }
+.effect-minus  { background: var(--red-pale);   color: var(--red); }
+.effect-special{ background: var(--yellow-pale); color: #706010; }
+.effect-lucky  { background: var(--purple-pale); color: var(--purple-dark); }
+.effect-swap   { background: #e0f0ff; color: #205080; }
+
+.ditto-card-footer {
+  border-top: 2px solid var(--purple-ditto);
+  padding: 14px 20px 16px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.ditto-icon-area {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--purple-ditto);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 2px solid rgba(180,140,220,0.4);
+}
+.ditto-icon-area img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.ditto-icon-placeholder {
+  font-size: 0.52rem;
+  color: #b890d8;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.3;
+  padding: 4px;
+}
+.card-resolve-btns-row {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+.resolve-btn {
+  flex: 1;
+  aspect-ratio: 1;
+  min-height: 70px;
+  border-radius: 18px;
+  border: none;
+  font-family: 'Comic Relief', 'Kosugi Maru', 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  line-height: 1.2;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.12);
+}
+.resolve-btn:active { transform: translateY(3px); box-shadow: none; }
+.resolve-done    { background: #c8f0a0; color: var(--green-dark); box-shadow: 0 4px 0 #7ab840; }
+.resolve-done:active { box-shadow: none; }
+.resolve-discard { background: #e8e0d0; color: #999; font-size: 0.88rem; box-shadow: 0 4px 0 #c0b8a8; }
+.resolve-discard:active { box-shadow: none; }
+
+/* ─────────────────────────────────────────
+   WIN OVERLAY
+───────────────────────────────────────── */
+.win-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(60,120,30,0.94);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  padding: 24px;
+}
+.win-overlay.show { display: flex; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.win-stars { font-size: 3rem; animation: spin 2s linear infinite; display: inline-block; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.win-title { font-size: 3.2rem; font-weight: 900; color: var(--yellow); text-shadow: 3px 4px 0 rgba(0,0,0,0.2); animation: bob 0.7s ease-in-out infinite alternate; }
+@keyframes bob { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+.win-jp    { font-size: 1.3rem; font-weight: 700; color: rgba(255,255,255,0.9); }
+.win-sub   { font-size: 1rem; color: white; font-weight: 500; }
+.win-close {
+  margin-top: 10px;
+  padding: 14px 32px;
+  border-radius: 50px;
+  border: none;
+  background: white;
+  color: var(--green-dark);
+  font-family: 'Comic Relief', 'Kosugi Maru', 'Zen Maru Gothic', sans-serif;
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 0 rgba(0,0,0,0.15);
+}
+
+/* ─────────────────────────────────────────
+   UTILS
+───────────────────────────────────────── */
+hr.dash {
+  border: none;
+  border-top: 2px dashed rgba(160,130,60,0.2);
+  margin: 12px 0;
+}
+
+/* ─────────────────────────────────────────
+   RULES TAB
+───────────────────────────────────────── */
+.tab-content#content-rules {
+  padding: 0;
+  position: relative;
+  z-index: 2;
+  background: #eaf5d5;
+}
+.tab-content#content-rules::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #eaf5d5;
+  z-index: 0;
+  pointer-events: none;
+}
+.tab-content#content-rules > * {
+  position: relative;
+  z-index: 1;
+}
+.rules-wrap {
+  padding: 14px 14px;
+}
+.rules-section { margin-bottom: 14px; }
+.rules-section-header {
+  background: linear-gradient(135deg, #4a9a40 0%, #62b855 100%);
+  color: white; border-radius: 16px 16px 0 0;
+  padding: 12px 16px; font-size: 0.82rem; font-weight: 900;
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer; user-select: none;
+}
+.rules-section-header .r-jp { font-size: 0.72rem; opacity: 0.88; font-weight: 500; }
+.rules-section-header .chevron { margin-left: auto; font-size: 0.75rem; transition: transform 0.2s; }
+.rules-section-header.open .chevron { transform: rotate(180deg); }
+.rules-section-body {
+  background: #fffdf5; border: 2px solid #e8e0cc;
+  border-top: none; border-radius: 0 0 16px 16px;
+  padding: 14px 14px; display: none;
+}
+.rules-section-body.open { display: block; }
+.rules-steps { list-style: none; padding: 0; margin: 0; }
+.rules-steps li {
+  display: flex; gap: 10px; padding: 8px 0;
+  border-bottom: 1px dashed rgba(160,130,60,0.15); align-items: flex-start;
+}
+.rules-steps li:last-child { border-bottom: none; }
+.step-num {
+  min-width: 26px; height: 26px; background: var(--green-dark);
+  color: white; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; margin-top: 1px;
+}
+.step-text .s-en { font-size: 0.88rem; font-weight: 700; color: #2a2030; line-height: 1.35; }
+.step-text .s-jp { font-size: 0.75rem; color: var(--brown); margin-top: 2px; line-height: 1.4; }
+.tile-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0; border-bottom: 1px dashed rgba(160,130,60,0.15);
+}
+.tile-row:last-child { border-bottom: none; }
+.tile-icon-wrap {
+  width: 52px; height: 52px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+  background: var(--green-pale); border: 2px solid rgba(100,170,80,0.3);
+  display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
+}
+.tile-icon-wrap img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.tile-icon-placeholder {
+  font-size: 0.46rem; color: var(--brown); font-weight: 700;
+  text-align: center; line-height: 1.3; padding: 3px;
+}
+.tile-info { flex: 1; }
+.tile-name-en { font-size: 0.88rem; font-weight: 900; color: #2a2030; }
+.tile-name-jp { font-size: 0.72rem; color: var(--brown); font-weight: 500; margin-bottom: 3px; }
+.tile-effect-en { font-size: 0.80rem; color: #444; line-height: 1.4; }
+.tile-effect-jp { font-size: 0.70rem; color: var(--brown); margin-top: 2px; line-height: 1.4; }
+.tile-badge {
+  display: inline-block; font-size: 0.62rem; font-weight: 700;
+  padding: 2px 8px; border-radius: 50px; margin-top: 4px;
+}
+.badge-green  { background: var(--green-pale);  color: var(--green-dark); }
+.badge-purple { background: var(--purple-pale); color: var(--purple-dark); }
+.badge-orange { background: var(--orange-pale); color: #884010; }
+.badge-red    { background: var(--red-pale);    color: #881010; }
+.badge-blue   { background: #d8eef8;            color: #1a5a88; }
+.badge-yellow { background: var(--yellow-pale); color: #705808; }
+.enc-info-row {
+  display: flex; gap: 8px; padding: 8px 0;
+  border-bottom: 1px dashed rgba(160,130,60,0.15); align-items: flex-start;
+}
+.enc-info-row:last-child { border-bottom: none; }
+.enc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.enc-text .e-en { font-size: 0.85rem; font-weight: 700; color: #2a2030; line-height: 1.35; }
+.enc-text .e-jp { font-size: 0.72rem; color: var(--brown); margin-top: 2px; line-height: 1.4; }
+.poke-center-check {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 8px 0; border-bottom: 1px dashed rgba(160,130,60,0.15);
+}
+.poke-center-check:last-child { border-bottom: none; }
+.check-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+.check-en { font-size: 0.85rem; font-weight: 700; color: #2a2030; line-height: 1.35; }
+.check-jp { font-size: 0.72rem; color: var(--brown); margin-top: 2px; line-height: 1.4; }
+.score-row {
+  display: flex; gap: 10px; align-items: center;
+  padding: 8px 10px; border-radius: 12px; margin-bottom: 6px;
+}
+.score-row:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ══ HEADER ══ -->
+  <div class="header">
+    <!-- When you add logo.png to the repo, this will show automatically -->
+    <img src="logo.png" alt="ぽこあ Pokopia" class="logo-img"
+         onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
+    <div class="logo-placeholder" id="logo-fallback" style="display:none">
+      <div class="logo-placeholder-box">📷 logo.png をここに追加してね</div>
+    </div>
+    <div class="header-sub">Game Companion App • ゲームサポートアプリ</div>
+  </div>
+
+  <!-- ══ TABS ══ -->
+  <div class="tabs">
+    <button class="tab active" id="tab-gauge" onclick="showTab('gauge')">
+      <span class="tab-icon"><img src="tab-gauge.png" alt="Gauge" onerror="this.outerHTML='🎚️'"></span>
+      Gauge
+      <span class="tab-jp">かんきょうゲージ</span>
+    </button>
+    <button class="tab" id="tab-ditto" onclick="showTab('ditto')">
+      <span class="tab-icon"><img src="tab-ditto.png" alt="Ditto Card" onerror="this.outerHTML='❗'"></span>
+      Ditto Card
+      <span class="tab-jp">メタモンカード</span>
+    </button>
+    <button class="tab" id="tab-materials" onclick="showTab('materials')">
+      <span class="tab-icon"><img src="tab-material.png" alt="Material Coin" onerror="this.outerHTML='🪙'"></span>
+      Material Coin
+      <span class="tab-jp">そざいコイン</span>
+    </button>
+    <button class="tab" id="tab-rules" onclick="showTab('rules')">
+      <span class="tab-icon"><img src="tab-rules.png" alt="Rules" onerror="this.outerHTML='📋'"></span>
+      Rules
+      <span class="tab-jp">ルール</span>
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       GAUGE TAB
+  ══════════════════════════════════════ -->
+  <div class="tab-content active" id="content-gauge">
+    <div class="panel">
+      <div class="panel-title">🎚️ Environment Gauge <span class="jp">かんきょうゲージ</span></div>
+      <div class="gauge-hero">
+        <div class="gauge-number" id="gauge-num">0</div>
+        <div class="gauge-level-label" id="gauge-label-en">Environment Level 0</div>
+        <div class="gauge-level-jp" id="gauge-label-jp">かんきょうレベル 0</div>
+      </div>
+      <div class="gauge-track">
+        <div class="gauge-fill" id="gauge-fill" style="width:0%;background:linear-gradient(90deg,#c8a060,#d8b860)"></div>
+      </div>
+      <div class="gauge-ticks">
+        <span style="left:0%;transform:none;">0</span>
+        <span style="left:10%;">10</span>
+        <span style="left:25%;">25</span>
+        <span style="left:50%;">50</span>
+        <span style="left:75%;">75</span>
+        <span style="left:100%;transform:translateX(-100%);">100🏆</span>
+      </div>
+      <hr class="dash">
+      <div class="gauge-grid">
+        <button class="g-btn gb-green"  onclick="soundTap();changeGauge(5)">+5<span class="lbl">ポケモンと出会った！(コイン1枚)<br>Pokémon Encountered! (1 coin)</span></button>
+        <button class="g-btn gb-purple" onclick="soundTap();changeGauge(10)">+10<span class="lbl">ポケモンと出会った！(コイン2枚)<br>Pokémon Encountered! (2 coins)</span></button>
+        <button class="g-btn gb-orange" onclick="soundTap();changeGauge(15)">+15<span class="lbl">ポケモンと出会った！(コイン3枚)<br>Pokémon Encountered! (3 coins)</span></button>
+        <button class="g-btn gb-blue"   onclick="soundTap();changeGauge(5)">+5<span class="lbl">モジャンボはかせのタイル<br>Prof. Tangrowth tile</span></button>
+        <button class="g-btn gb-yellow" onclick="soundTap();changeGauge(25)">+25<span class="lbl">ポケモンセンター完成！<br>Pokémon Center completed!</span></button>
+        <button class="g-btn gb-red"    onclick="soundTap();changeGauge(-5)">−5<span class="lbl">悪いメタモンカード<br>Bad Ditto Card drawn</span></button>
+      </div>
+    </div>
+    <div class="reset-row">
+      <button class="reset-btn" onclick="confirmReset()">🔄 Reset Game / ゲームをリセット</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       MATERIALS TAB
+  ══════════════════════════════════════ -->
+  <div class="tab-content" id="content-materials">
+    <div class="panel">
+      <div class="panel-title">👥 Players <span class="jp">プレイヤーの数</span></div>
+      <div class="player-adjust">
+        <button class="adj-btn" onclick="soundButtonPress();changePlayers(-1)">−</button>
+        <span class="adj-num" id="player-count">4</span>
+        <button class="adj-btn" onclick="soundButtonPress();changePlayers(1)">+</button>
+        <span style="font-size:0.82rem;color:var(--brown)">人</span>
+      </div>
+      <hr class="dash">
+      <div class="panel-title">🪙 Material Coins <span class="jp">そざいコイン</span></div>
+      <div class="players-grid" id="players-grid"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       DITTO CARDS TAB
+  ══════════════════════════════════════ -->
+  <div class="tab-content" id="content-ditto">
+    <div class="panel">
+      <div class="panel-title">❗ Ditto Card <span class="jp">メタモンカード</span></div>
+
+      <!-- Deck Selector -->
+      <div id="deck-selector" style="display:none; margin-bottom:14px;">
+        <div style="font-size:0.72rem; font-weight:700; color:var(--brown); text-align:center; margin-bottom:10px; letter-spacing:0.5px;">
+          Choose a deck! / デッキをえらぼう！
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button id="deck-btn-easy" onclick="selectDeck('easy')" style="
+            flex:1; padding:14px 8px; border-radius:18px; border:3px solid var(--green-mid);
+            background:var(--green-pale); color:var(--green-dark);
+            font-family:'Comic Relief','Kosugi Maru','Zen Maru Gothic',sans-serif; font-weight:900; font-size:1rem;
+            cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:4px;
+            box-shadow:0 4px 0 var(--green-mid); transition:transform 0.1s, box-shadow 0.1s;">
+            🌱<span style="font-size:1rem;">EASY</span><span style="font-size:0.72rem; font-weight:500;">かんたん</span>
+          </button>
+          <button id="deck-btn-hard" onclick="selectDeck('hard')" style="
+            flex:1; padding:14px 8px; border-radius:18px; border:3px solid #e07020;
+            background:#feecd0; color:#8a3a08;
+            font-family:'Comic Relief','Kosugi Maru','Zen Maru Gothic',sans-serif; font-weight:900; font-size:1rem;
+            cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:4px;
+            box-shadow:0 4px 0 #e07020; transition:transform 0.1s, box-shadow 0.1s;">
+            🔥<span style="font-size:1rem;">HARD</span><span style="font-size:0.72rem; font-weight:500;">むずかしい</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Active deck label -->
+      <div id="deck-label" style="display:none; text-align:center; margin-bottom:10px;">
+        <span id="deck-label-text" style="font-size:0.72rem; font-weight:700; padding:4px 14px; border-radius:50px; background:var(--green-pale); color:var(--green-dark);"></span>
+        <button onclick="soundButtonPress();resetDeckChoice()" style="
+          font-size:0.65rem; font-weight:700; color:#aaa; background:none; border:none;
+          cursor:pointer; margin-left:8px; text-decoration:underline;">
+          Change / かえる
+        </button>
+      </div>
+
+      <!-- Mini Gauge -->
+      <div style="background:#f0ece0; border-radius:16px; padding:10px 14px 12px; margin-bottom:14px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+          <span style="font-size:0.68rem; font-weight:700; color:var(--green-dark); text-transform:uppercase; letter-spacing:1px;">🎚️ Gauge / ゲージ</span>
+          <span style="font-size:1.4rem; font-weight:900; color:var(--green-dark); line-height:1;" id="mini-gauge-num">0</span>
+        </div>
+        <div style="background:#e0d4a8; border-radius:50px; height:18px; overflow:hidden; border:2px solid rgba(255,255,255,0.7); box-shadow:inset 0 2px 4px rgba(0,0,0,0.08);">
+          <div id="mini-gauge-fill" style="height:100%; width:0%; border-radius:50px; transition:width 0.7s cubic-bezier(.34,1.56,.64,1), background 0.6s; background:linear-gradient(90deg,#c8a060,#d8b860);"></div>
+        </div>
+      </div>
+
+      <div class="ditto-area" id="ditto-area"></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       RULES TAB
+  ══════════════════════════════════════ -->
+  <div class="tab-content" id="content-rules">
+  <div class="rules-wrap">
+    <div class="rules-section">
+      <div class="rules-section-header open" onclick="toggleSection(this)">
+        <span>🎲</span>
+        <div><div class="r-en">How to Play</div><div class="r-jp">あそびかた</div></div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="rules-section-body open">
+        <ul class="rules-steps">
+          <li>
+            <div class="step-num">1</div>
+            <div class="step-text">
+              <div class="s-en">Roll the die and move forward that many spaces.</div>
+              <div class="s-jp">さいころをふって、出た目の数だけ前に進む。</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">2</div>
+            <div class="step-text">
+              <div class="s-en">Resolve the tile you landed on (see Tile Guide below).</div>
+              <div class="s-jp">止まったタイルの<ruby>効果<rt>こうか</rt></ruby>を<ruby>実行<rt>じっこう</rt></ruby>する（下のタイルガイドを見よう）。</div>
+            </div>
+          </li>
+          <li>
+            <div class="step-num">3</div>
+            <div class="step-text">
+              <div class="s-en">Pass the die clockwise to the next player.</div>
+              <div class="s-jp"><ruby>時計回り<rt>とけいまわり</rt></ruby>に次のプレイヤーにさいころを渡す。</div>
+            </div>
+          </li>
+        </ul>
+        <div style="margin-top:12px; padding:10px 12px; background:var(--green-pale); border-radius:12px;">
+          <div style="font-size:0.82rem; font-weight:900; color:var(--green-dark); margin-bottom:8px;">🏁 The game ends when… / ゲーム終了は…</div>
+          <div style="display:flex; gap:8px; align-items:flex-start; margin-bottom:6px;">
+            <span style="font-size:1rem; flex-shrink:0;">1️⃣</span>
+            <div>
+              <div style="font-size:0.78rem; font-weight:700; color:var(--green-dark);">Everyone reaches GOAL</div>
+              <div style="font-size:0.68rem; color:#4a7a40;">全員がゴールに着いたとき</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:flex-start; margin-bottom:6px;">
+            <span style="font-size:1rem; flex-shrink:0;">2️⃣</span>
+            <div>
+              <div style="font-size:0.78rem; font-weight:700; color:var(--green-dark);">Environment gauge reaches 100 🌟</div>
+              <div style="font-size:0.68rem; color:#4a7a40;">かんきょうゲージが100になったとき</div>
+            </div>
+          </div>
+          <div style="display:flex; gap:8px; align-items:flex-start;">
+            <span style="font-size:1rem; flex-shrink:0;">3️⃣</span>
+            <div>
+              <div style="font-size:0.78rem; font-weight:700; color:var(--green-dark);">Time's up! ⏰</div>
+              <div style="font-size:0.68rem; color:#4a7a40;">時間切れのとき</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 2: TILE GUIDE ── -->
+    <div class="rules-section">
+      <div class="rules-section-header open" onclick="toggleSection(this)">
+        <span>🗺️</span>
+        <div><div class="r-en">Tile Guide</div><div class="r-jp">タイルガイド</div></div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="rules-section-body open">
+
+        <!-- Material tile -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="tile-material.png" alt="Material Tile"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>tile-material<br>.png</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Material Tile</div>
+            <div class="tile-name-jp">そざいタイル</div>
+            <div class="tile-effect-en">Take 1 Material Coin from the pile.</div>
+            <div class="tile-effect-jp">山からそざいコインを1枚もらう。</div>
+            <span class="tile-badge badge-green">+1 coin / コイン+1</span>
+          </div>
+        </div>
+
+        <!-- Ditto tile -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="tile-ditto.png" alt="Ditto Tile"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>tile-ditto<br>.png</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Ditto Tile</div>
+            <div class="tile-name-jp">メタモンタイル</div>
+            <div class="tile-effect-en">Draw a Ditto Card and do the challenge. Try your best!</div>
+            <div class="tile-effect-jp">メタモンカードを引いてチャレンジ！ベストを尽くそう！</div>
+            <span class="tile-badge badge-purple">Challenge / チャレンジ</span>
+          </div>
+        </div>
+
+        <!-- Grass patch tile -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="tile-grass.png" alt="Grass Patch Tile"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>tile-grass<br>.png</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Grass Patch Tile</div>
+            <div class="tile-name-jp">くさむらタイル</div>
+            <div class="tile-effect-en">You must play an Encounter Card here! Choose one from your hand, pay its coin cost, and do the challenge.</div>
+            <div class="tile-effect-jp">であいカードを1枚プレイしよう！手持ちから1枚えらんで、コインを払って、チャレンジする。</div>
+            <div class="tile-effect-en" style="margin-top:4px; font-size:0.72rem; color:var(--brown);">💡 Only skip if you can't afford any card in your hand. Grass patches come in various colors — they all work the same!</div>
+            <div class="tile-effect-jp" style="font-size:0.68rem; color:var(--brown);">手持ちのカードを1枚も払えない時だけスキップOK。くさむらは色が違っても効果は同じ！</div>
+            <span class="tile-badge badge-purple">Encounter Card / であいカード</span>
+          </div>
+        </div>
+
+        <!-- Arrow tile -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="tile-arrow.png" alt="Arrow Tile"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>tile-arrow<br>.png</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Arrow Tile</div>
+            <div class="tile-name-jp">やじるしタイル</div>
+            <div class="tile-effect-en">Move forward or backward the number shown, then resolve the new tile.</div>
+            <div class="tile-effect-jp"><ruby>矢印<rt>やじるし</rt></ruby>の数だけ進む・戻る。止まったタイルの<ruby>効果<rt>こうか</rt></ruby>も<ruby>実行<rt>じっこう</rt></ruby>する。</div>
+            <span class="tile-badge badge-blue">Move / いどう</span>
+          </div>
+        </div>
+
+        <div style="margin:10px 0 6px; font-size:0.72rem; font-weight:900; color:var(--brown); letter-spacing:0.5px; text-transform:uppercase;">NPC Tiles / NPCタイル</div>
+
+        <!-- Prof Tangrowth -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="npc-tangrowth.png" alt="モジャンボはかせ"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>モジャンボ<br>はかせ</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Professor Tangrowth</div>
+            <div class="tile-name-jp">モジャンボはかせ</div>
+            <div class="tile-effect-en">Draw a Ditto Card and do the challenge. Try it → Gauge +5 + 1 material coin!</div>
+            <div class="tile-effect-jp">メタモンカードを引いてチャレンジ。やれば → ゲージ+5 + そざいコイン1枚！</div>
+            <div class="tile-effect-en" style="margin-top:4px; font-size:0.72rem; color:var(--purple-dark);">💡 Go to the Gauge tab and tap the Prof. Tangrowth button to apply the +5!</div>
+            <div class="tile-effect-jp" style="font-size:0.68rem; color:var(--brown);">ゲージタブのモジャンボはかせボタンを押して+5を適用しよう！</div>
+            <span class="tile-badge badge-green">+5 gauge + 1 coin / ゲージ+5 + コイン1枚</span>
+          </div>
+        </div>
+
+        <!-- Peakychu -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="npc-peakychu.png" alt="うすチュウ"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>うすチュウ</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Peakychu / うすチュウ</div>
+            <div class="tile-name-jp">ドンヨリ海辺エリア</div>
+            <div class="tile-effect-en">Everyone gets 1 Material Coin! No challenge needed.</div>
+            <div class="tile-effect-jp">みんなそざいコインを1枚もらう！チャレンジなし。</div>
+            <span class="tile-badge badge-yellow">Everyone! / みんな！</span>
+          </div>
+        </div>
+
+        <!-- Mosslax -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="npc-mosslax.png" alt="こけカビゴン"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>こけ<br>カビゴン</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Mosslax / こけカビゴン</div>
+            <div class="tile-name-jp">ドンヨリ海辺エリア</div>
+            <div class="tile-effect-en">Lose your next turn. Mosslax is too sleepy to help!</div>
+            <div class="tile-effect-jp">次のターンをスキップ。こけカビゴンは眠すぎて助けてくれない！</div>
+            <span class="tile-badge badge-red">Lose a turn / ターンスキップ</span>
+          </div>
+        </div>
+
+        <!-- Smearguru -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="npc-smearguru.png" alt="ドーブルせんせい"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>ドーブル<br>せんせい</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Smearguru / ドーブルせんせい</div>
+            <div class="tile-name-jp">ドンヨリ海辺エリア</div>
+            <div class="tile-effect-en">Draw a Ditto in 5 seconds! ✏️</div>
+            <div class="tile-effect-jp">5秒でディットを描こう！✏️</div>
+            <span class="tile-badge badge-orange">Draw! 5 secs / 5秒でお絵かき！</span>
+          </div>
+        </div>
+
+        <!-- Chef Dente -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="npc-chefdente.png" alt="シェフバリス"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>シェフ<br>バリス</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Chef Dente / シェフバリス</div>
+            <div class="tile-name-jp">ゴツゴツやまエリア</div>
+            <div class="tile-effect-en">You AND one other player each get 2 Material Coins!</div>
+            <div class="tile-effect-jp">あなたともう一人のプレイヤーが、それぞれそざいコインを2枚もらう！</div>
+            <span class="tile-badge badge-green">+2 coins each / 各+2コイン</span>
+          </div>
+        </div>
+
+        <!-- DJ Rotom -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="npc-djrotom.png" alt="アゲ↑ロトム"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>アゲ↑<br>ロトム</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">DJ Rotom / アゲ↑ロトム</div>
+            <div class="tile-name-jp">ゴツゴツやまエリア</div>
+            <div class="tile-effect-en">Take another turn immediately! 🎵</div>
+            <div class="tile-effect-jp">もう一回ターンを取る！🎵</div>
+            <span class="tile-badge badge-blue">Extra turn! / もう一回！</span>
+          </div>
+        </div>
+
+        <!-- Tinkmaster -->
+        <div class="tile-row">
+          <div class="tile-icon-wrap">
+            <img src="npc-tinkmaster.png" alt="デカヌおやかた"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\'tile-icon-placeholder\'>デカヌ<br>おやかた</div>'">
+          </div>
+          <div class="tile-info">
+            <div class="tile-name-en">Tinkmaster / デカヌおやかた</div>
+            <div class="tile-name-jp">キラキラうきしまエリア</div>
+            <div class="tile-effect-en">Draw 1 Encounter Card from the pile + receive 2 Material Coins!</div>
+            <div class="tile-effect-jp">山からであいカードを1枚引く + そざいコイン2枚もらう！</div>
+            <span class="tile-badge badge-purple">+card +2 coins / カード+コイン+2</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── SECTION 3: ENCOUNTER CARDS ── -->
+    <div class="rules-section">
+      <div class="rules-section-header" onclick="toggleSection(this)">
+        <span>🌿</span>
+        <div><div class="r-en">Encounter Cards</div><div class="r-jp">であいカード</div></div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="rules-section-body">
+        <div style="font-size:0.80rem; font-weight:700; color:var(--green-dark); margin-bottom:10px;">
+          Each player starts with a hand of Encounter Cards (3–5 depending on player count).<br>
+          <span style="font-weight:500; color:var(--brown);">各プレイヤーはであいカードを3〜5枚持ってスタート（人数による）。</span>
+        </div>
+
+        <div class="enc-info-row">
+          <div class="enc-dot" style="background:#62a855;"></div>
+          <div class="enc-text">
+            <div class="e-en">Each card shows a Pokémon, a habitat type, a material cost (1–3 coins), an English challenge, and a point value.</div>
+            <div class="e-jp">カードにはポケモン・<ruby>生息地<rt>せいそくち</rt></ruby>タイプ・そざいコスト（1〜3枚）・英語チャレンジ・ポイント数が書いてある。</div>
+          </div>
+        </div>
+
+        <div style="margin:10px 0 6px; font-size:0.75rem; font-weight:900; color:var(--brown);">🌿 On a Grass Patch Tile — Play an Encounter Card! / くさむらタイルでやること</div>
+
+        <div class="enc-info-row">
+          <div class="enc-dot" style="background:#7a50b8;"></div>
+          <div class="enc-text">
+            <div class="e-en"><b>1.</b> Choose one Encounter Card from your hand.</div>
+            <div class="e-jp">手持ちのであいカードを1枚えらぶ。</div>
+          </div>
+        </div>
+        <div class="enc-info-row">
+          <div class="enc-dot" style="background:#7a50b8;"></div>
+          <div class="enc-text">
+            <div class="e-en"><b>2.</b> Pay the material cost shown on the card (return coins to the pile).</div>
+            <div class="e-jp">カードに書いてあるコスト分のそざいコインを山に戻す。</div>
+          </div>
+        </div>
+        <div class="enc-info-row">
+          <div class="enc-dot" style="background:#7a50b8;"></div>
+          <div class="enc-text">
+            <div class="e-en"><b>3.</b> Do the English challenge on the card. Try your best — trying = success!</div>
+            <div class="e-jp">カードの英語チャレンジをやる。やってみることが大事！</div>
+          </div>
+        </div>
+        <div class="enc-info-row">
+          <div class="enc-dot" style="background:#7a50b8;"></div>
+          <div class="enc-text">
+            <div class="e-en"><b>4.</b> Place the card face-up in front of you. That Pokémon is now your friend! 🎉</div>
+            <div class="e-jp">カードを自分の前に表向きで置く。そのポケモンがあなたの友だち！</div>
+          </div>
+        </div>
+        <div class="enc-info-row">
+          <div class="enc-dot" style="background:#62a855;"></div>
+          <div class="enc-text">
+            <div class="e-en"><b>5.</b> Tap the matching gauge button on the Gauge tab! Then draw a new Encounter Card to refill your hand.</div>
+            <div class="e-jp">ゲージタブでボタンを押してゲージを上げよう！そのあと、山からであいカードを1枚引いて補充する。</div>
+          </div>
+        </div>
+        <div style="margin-top:10px; padding:8px 12px; background:var(--red-pale); border-radius:12px;">
+          <div style="font-size:0.75rem; font-weight:900; color:#881010;">⚠️ Can't afford any card? / 払えるカードがない？</div>
+          <div style="font-size:0.72rem; color:#881010; margin-top:3px; line-height:1.5;">
+            If you can't pay for any Encounter Card in your hand, your turn ends without playing one. Try to collect more coins next time!<br>
+            <span style="opacity:0.85;">手持ちのどのカードも払えない場合は、そのままターン終了。次にそざいコインをもっと集めよう！</span>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; padding:10px 12px; background:var(--purple-pale); border-radius:12px;">
+          <div style="font-size:0.78rem; font-weight:900; color:var(--purple-dark);">🔄 Swapping Encounter Cards / であいカードの交換</div>
+          <div style="font-size:0.75rem; color:var(--purple-dark); margin-top:4px; line-height:1.5;">
+            Some Ditto Cards let you swap! Two ways:<br>
+            <span style="color:var(--brown);">メタモンカードで交換できることも！2つの方法：</span>
+          </div>
+          <div style="font-size:0.75rem; color:#444; margin-top:6px; line-height:1.6;">
+            🔄 <b>Swap with the pile</b> — return 1 card, draw 1 new card.<br>
+            <span style="color:var(--brown); font-size:0.70rem;">山と交換 — 1枚戻して1枚引く。</span><br>
+            🤝 <b>Steal from a player</b> — swap 1 card with another player's hand.<br>
+            <span style="color:var(--brown); font-size:0.70rem;">他の人と交換 — 1枚交換する。</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 4: POKÉMON CENTER ── -->
+    <div class="rules-section">
+      <div class="rules-section-header" onclick="toggleSection(this)">
+        <span>🏥</span>
+        <div><div class="r-en">Pokémon Center Building Kit</div><div class="r-jp">ポケモンセンター<ruby>建築<rt>けんちく</rt></ruby>キット</div></div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="rules-section-body">
+
+        <!-- Building kit image placeholder -->
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; padding:10px 12px; background:#f0ece0; border-radius:14px;">
+          <div style="width:64px; height:64px; border-radius:12px; overflow:hidden; flex-shrink:0; border:2px solid rgba(160,130,60,0.2);">
+            <img src="pokecen-kit.png" alt="ポケモンセンター建築キット" style="width:100%;height:100%;object-fit:cover;"
+                 onerror="this.style.display='none';this.parentNode.innerHTML='<div style=\'width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:var(--green-pale);font-size:0.46rem;font-weight:700;color:var(--brown);text-align:center;line-height:1.3;padding:4px;\'>pokecen-kit<br>.png</div>'">
+          </div>
+          <div>
+            <div style="font-size:0.82rem; font-weight:900; color:#444;">Pokémon Center Building Kit Tile</div>
+            <div style="font-size:0.70rem; color:var(--brown); margin-top:2px;">ポケモンセンター<ruby>建築<rt>けんちく</rt></ruby>キットタイル</div>
+            <div style="font-size:0.72rem; color:#666; margin-top:3px; line-height:1.4;">Second-to-last tile. The completed Pokémon Center is at GOAL!</div>
+            <div style="font-size:0.65rem; color:var(--brown);">ゴールの一つ前のタイル。<ruby>完成<rt>かんせい</rt></ruby>したポケモンセンターはゴールにある！</div>
+          </div>
+        </div>
+
+        <div style="font-size:0.80rem; color:#444; line-height:1.5; margin-bottom:12px;">
+          <b>No one can pass this tile until it is built!</b><br>
+          <span style="font-size:0.72rem; color:var(--brown);"><ruby>建設<rt>けんせつ</rt></ruby>が<ruby>完了<rt>かんりょう</rt></ruby>するまで誰も通過できない！</span>
+        </div>
+
+        <div style="font-size:0.75rem; font-weight:900; color:var(--brown); margin-bottom:8px;"><ruby>建設<rt>けんせつ</rt></ruby><ruby>条件<rt>じょうけん</rt></ruby> / Building requirements:</div>
+
+        <div class="poke-center-check">
+          <div class="check-icon">🃏</div>
+          <div>
+            <div class="check-en">Total face-up Encounter Cards ≥ number of players</div>
+            <div class="check-jp"><ruby>全員<rt>ぜんいん</rt></ruby>の<ruby>表向<rt>おもてむ</rt></ruby>きであいカード<ruby>合計<rt>ごうけい</rt></ruby> ≥ プレイヤーの人数</div>
+          </div>
+        </div>
+        <div class="poke-center-check">
+          <div class="check-icon">🪙</div>
+          <div>
+            <div class="check-en">Every player contributes 2 Material Coins</div>
+            <div class="check-jp"><ruby>全員<rt>ぜんいん</rt></ruby>がそざいコインを2枚ずつ出す</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; padding:10px 12px; background:#d8eef8; border-radius:12px;">
+          <div style="font-size:0.78rem; font-weight:900; color:#1a5a88;">+25 Gauge! / ゲージ+25！</div>
+          <div style="font-size:0.72rem; color:#1a5a88; margin-top:3px; line-height:1.5;">
+            Building the Pokémon Center gives a huge gauge boost! Everyone can then proceed to GOAL.<br>
+            <span style="opacity:0.8;">ポケモンセンターを建てるとゲージが<ruby>大幅<rt>おおはば</rt></ruby>アップ！その後、<ruby>全員<rt>ぜんいん</rt></ruby>がゴールへ進める。</span>
+          </div>
+        </div>
+
+        <div style="margin-top:10px; padding:10px 12px; background:var(--yellow-pale); border-radius:12px;">
+          <div style="font-size:0.78rem; font-weight:700; color:#705808;">💡 Tip / ヒント</div>
+          <div style="font-size:0.72rem; color:#705808; margin-top:3px; line-height:1.5;">
+            Players who arrive early can move BACKWARDS to collect more coins or build habitats while others catch up!<br>
+            <span style="opacity:0.85;"><ruby>早<rt>はや</rt></ruby>く着いたプレイヤーは、他の人を待つ間、後ろに戻ってコインを集めたり<ruby>生息地<rt>せいそくち</rt></ruby>を作ったりできる！</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SECTION 5: SCORING ── -->
+    <div class="rules-section">
+      <div class="rules-section-header" onclick="toggleSection(this)">
+        <span>🏆</span>
+        <div><div class="r-en">Scoring</div><div class="r-jp">スコア</div></div>
+        <span class="chevron">▼</span>
+      </div>
+      <div class="rules-section-body">
+        <div style="font-size:0.80rem; color:#444; line-height:1.5; margin-bottom:12px;">
+          When the game ends, everyone counts their individual score:<br>
+          <span style="font-size:0.72rem; color:var(--brown);">ゲームが終わったら、<ruby>個人<rt>こじん</rt></ruby>スコアを数えよう：</span>
+        </div>
+        <div class="score-row" style="background:var(--green-pale);">
+          <span style="font-size:1.3rem;">🃏</span>
+          <div>
+            <div style="font-size:0.85rem; font-weight:900; color:var(--green-dark);">Points on face-up Encounter Cards</div>
+            <div style="font-size:0.72rem; color:#4a7a40;"><ruby>表向<rt>おもてむ</rt></ruby>きであいカードのポイント<ruby>合計<rt>ごうけい</rt></ruby></div>
+          </div>
+        </div>
+        <div style="text-align:center; font-size:1.1rem; font-weight:900; color:var(--brown); padding:2px 0;">＋</div>
+        <div class="score-row" style="background:var(--orange-pale);">
+          <span style="font-size:1.3rem;">🪙</span>
+          <div>
+            <div style="font-size:0.85rem; font-weight:900; color:#884010;">Material Coins remaining in hand</div>
+            <div style="font-size:0.72rem; color:#a05020;"><ruby>手持<rt>てもち</rt></ruby>ちのそざいコインの<ruby>枚数<rt>まいすう</rt></ruby></div>
+          </div>
+        </div>
+        <div style="margin-top:10px; padding:10px 12px; background:var(--purple-pale); border-radius:12px; text-align:center;">
+          <div style="font-size:0.88rem; font-weight:900; color:var(--purple-dark);">🌟 Highest score = Winner!</div>
+          <div style="font-size:0.75rem; color:var(--purple-dark); margin-top:2px;"><ruby>最高<rt>さいこう</rt></ruby>スコア = <ruby>優勝<rt>ゆうしょう</rt></ruby>！</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end rules-wrap -->
+  </div><!-- end rules tab -->
+
+<!-- ══ WIN OVERLAY ══ -->
+<div class="win-overlay" id="win-overlay">
+  <div class="win-stars">🌟</div>
+  <div class="win-title">YOU WIN!</div>
+  <div class="win-jp">みんなの勝利！🎉</div>
+  <div class="win-sub">Environment Level 5 reached! / かんきょうレベル5 たっせい！</div>
+  <button class="win-close" onclick="closeWin()">Continue / つづける</button>
+</div>
+
+</div><!-- .app -->
+
+<script>
+/* ═══════════════════════════════════════
+   DITTO DECK DATA
+═══════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   EASY DECK (🌱 50 cards)
+═══════════════════════════════════════ */
+const EASY_DECK_RAW = [
+  // ── Read it! — 3-letter words ──
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'CAT', jp:'この言葉を声に出して読もう！', answer:'キャットゥ', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'DOG', jp:'この言葉を声に出して読もう！', answer:'ドッグ',     effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'PIG', jp:'この言葉を声に出して読もう！', answer:'ピッグ',     effect:"+5", effectVal:5, type:"plus" },
+  // ── Read it! — single letters ──
+  { cat:"📖 Read it!", en:'What letter is this?', word:'A', jp:'この文字は何？', answer:'エイ',       effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'b', jp:'この文字は何？', answer:'ビー',       effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'d', jp:'この文字は何？', answer:'ディー',     effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'p', jp:'この文字は何？', answer:'ピー',       effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'q', jp:'この文字は何？', answer:'キュー',     effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'m', jp:'この文字は何？', answer:'エム',       effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'n', jp:'この文字は何？', answer:'エヌ',       effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'w', jp:'この文字は何？', answer:'ダブリュー', effect:"+5", effectVal:5, type:"plus" },
+  // ── English for this? ──
+  { cat:"🤔 English for this?", en:"What's this?", word:'⭐', jp:'これは英語で何？', answer:'Star!<br>スター',              effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🩷', jp:'これは英語で何？', answer:'Heart!<br>ハート',             effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍅', jp:'これは英語で何？', answer:'Tomato!<br>トメイト',          effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍄‍🟫', jp:'これは英語で何？', answer:'Mushroom!<br>マッシュルーム', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🥦', jp:'これは英語で何？', answer:'Broccoli!<br>ブロッコリー',    effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍒', jp:'これは英語で何？', answer:'Cherry!<br>チェリー',          effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍌', jp:'これは英語で何？', answer:'Banana!<br>バナナ',            effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍔', jp:'これは英語で何？', answer:'Hamburger!<br>ハンバーガー',   effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍕', jp:'これは英語で何？', answer:'Pizza!<br>ピッツァ',           effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍰', jp:'これは英語で何？', answer:'Cake!<br>ケーキ',              effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍮', jp:'これは英語で何？', answer:'Pudding!<br>プディング',       effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍦', jp:'これは英語で何？', answer:'Ice cream!<br>アイスクリーム', effect:"+5", effectVal:5, type:"plus" },
+  // ── Say it! ──
+  { cat:"💬 Say it!", en:"How are you?\n\nAnswer in English!", jp:"今の気持ちを英語で言おう！",   hint:"I'm happy / tired / hungry!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"Say one Pokémon you like!",          jp:"好きなポケモンを英語で言おう！", hint:"I like ___!",                 effect:"+5", effectVal:5, type:"plus" },
+  // ── Ask a friend! ──
+  { cat:"🙋 Ask a friend!", en:'Ask anyone:\n\n"How are you?"',                   jp:'誰かに聞こう：\n\n「How are you?」',                        effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask a friend!", en:'Ask the teacher:\n\n"How are you?"',              jp:'先生に聞こう：\n\n「How are you?」',                        effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask a friend!", en:'Ask a friend:\n\n"What Pokémon do you like?"',    jp:'友だちに聞こう：\n\n「What Pokémon do you like?」\n好きなポケモンは何ですか？',  effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask a friend!", en:'Ask the teacher:\n\n"What Pokémon do you like?"', jp:'先生に聞こう：\n\n「What Pokémon do you like?」\n好きなポケモンは何ですか？',    effect:"+5", effectVal:5, type:"plus" },
+  // ── Special! ──
+  { cat:"⭐ Special!", en:"Everyone count to 10 in English together!", jp:"みんなで英語で１〜10を数えよう！", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"⭐ Special!", en:"Everyone strike a pose! 📸",                jp:"みんなポーズ！📸",                effect:"+5", effectVal:5, type:"plus" },
+  // ── Count the board! ──
+  { cat:"🔢 Count the board!", en:"Count all the ❗ Ditto tiles on the board!\n\nHow many are there?",     jp:"ボードの❗メタモンタイルをかぞえよう！\n\nいくつある？", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🔢 Count the board!", en:"Count all the Professor Tangrowth circles on the board!\n\nHow many?", jp:"ボードのモジャンボはかせをかぞえよう！\n\nいくつある？", effect:"+5", effectVal:5, type:"plus" },
+  // ── Janken! ──
+  { cat:"✊ Janken!", en:"Janken with anyone!\n\nWinner gets 1 material coin!",                         jp:"誰かとじゃんけん！\n\n勝った人はそざいコイン1枚もらう！",           effect:"Special!", effectVal:0, type:"special" },
+  { cat:"✊ Janken!", en:"Everyone janken!\n\nWinner gets 1 material coin AND 1 Encounter Card!",       jp:"みんなでじゃんけん！\n\n<ruby>優勝<rt>ゆうしょう</rt></ruby>した人はそざいコイン1枚＋であいカード1枚！", effect:"Special!", effectVal:0, type:"special" },
+  { cat:"✊ Janken!", en:"Janken with anyone!\n\nLoser gives the winner 1 material coin!",              jp:"誰かとじゃんけん！\n\n負けた人は勝った人にそざいコイン1枚わたす！",   effect:"Special!", effectVal:0, type:"special" },
+  // ── Lucky! ──
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nDraw 1 Encounter Card into your hand!", jp:"ラッキー！\n\nであいカードを1枚引こう！",   effect:"Draw card!", effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nDraw 1 Encounter Card into your hand!", jp:"ラッキー！\n\nであいカードを1枚引こう！",   effect:"Draw card!", effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 1 material coin!",                 jp:"ラッキー！\n\nそざいコインを1枚もらおう！", effect:"+1 coin",    effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 1 material coin!",                 jp:"ラッキー！\n\nそざいコインを1枚もらおう！", effect:"+1 coin",    effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 2 material coins!",                jp:"ラッキー！\n\nそざいコインを2枚もらおう！", effect:"+2 coins",   effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 2 material coins!",                jp:"ラッキー！\n\nそざいコインを2枚もらおう！", effect:"+2 coins",   effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nGauge goes up!",                        jp:"ラッキー！\n\nゲージがあがる！",           effect:"+5",         effectVal:5, type:"plus" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nGauge goes up!",                        jp:"ラッキー！\n\nゲージがあがる！",           effect:"+5",         effectVal:5, type:"plus" },
+  // ── Swap! ──
+  { cat:"🔄 Swap!", en:"Swap one Encounter Card\nwith another player!", jp:"であいカードを誰かと\n1枚交換しよう！", effect:"Swap cards", effectVal:0, type:"swap" },
+  { cat:"🔄 Swap!", en:"Swap one Encounter Card\nwith the pile!",       jp:"であいカードを山と\n1枚交換しよう！",   effect:"Swap cards", effectVal:0, type:"swap" },
+  // ── Oops! ──
+  { cat:"😱 Oops!", en:"Ditto got confused!\n\nGauge −5…",                          jp:"メタモンが混乱した！\n\nゲージ−5…",            effect:"−5",       effectVal:-5, type:"minus" },
+  { cat:"😱 Oops!", en:"A storm came!\n\nGauge −5…",                                jp:"嵐が来た！\n\nゲージ−5…",                     effect:"−5",       effectVal:-5, type:"minus" },
+  { cat:"😱 Oops!", en:"Oops!\n\nGive 1 material coin to the player on your left!", jp:"あらら！\n\n左の人にそざいコイン1枚わたそう！", effect:"Special!", effectVal:0,  type:"special" },
+  { cat:"😱 Oops!", en:"Uh oh!\n\nEveryone loses 1 material coin…",                 jp:"あらら！\n\nみんなそざいコインを1枚返そう…",   effect:"Special!", effectVal:0,  type:"special" },
+];
+
+/* ═══════════════════════════════════════
+   HARD DECK (🔥 50 cards)
+═══════════════════════════════════════ */
+const HARD_DECK_RAW = [
+  // ── Read it! ──
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'BEAUTIFUL',  jp:'この言葉を読もう！', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'DELICIOUS',  jp:'この言葉を読もう！', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'ADVENTURE',  jp:'この言葉を読もう！', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'FRIENDSHIP', jp:'この言葉を読もう！', effect:"+5", effectVal:5, type:"plus" },
+  // ── English for this? ──
+  { cat:"🤔 English for this?", en:"What is 理科 in English?",    jp:"理科は英語で何？",   answer:"Science! / 理科！",       effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What is 社会 in English?",    jp:"社会は英語で何？",   answer:"Social Studies! / 社会！",effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What season is 冬 in English?",jp:"冬は英語で何？",    answer:"Winter! / 冬！",          effect:"+5", effectVal:5, type:"plus" },
+  // ── Say it! ──
+  { cat:"💬 Say it!", en:"What is your favorite season?\n\nWhy?",
+    jp:"好きな<ruby>季節<rt>きせつ</rt></ruby>は？\n\nなぜ？",
+    hint:"My favorite season is ___ because ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"Name 3 Pokémon that live in the ocean!",
+    jp:"<ruby>海<rt>うみ</rt></ruby>にすむポケモンを3匹言おう！",
+    hint:"___, ___, and ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"Describe what you're wearing today!\n\nUse 2 colors!",
+    jp:"今日の<ruby>服装<rt>ふくそう</rt></ruby>を英語で言おう！\n\n色を2つ使って！",
+    hint:"I'm wearing ___ and ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"What did you eat today?",
+    jp:"今日は何を食べた？",
+    hint:"I ate ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"Say something you can do really well!",
+    jp:"<ruby>得意<rt>とくい</rt></ruby>なことを英語で言おう！",
+    hint:"I can ___ very well!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"Name 3 things you can see right now!",
+    jp:"今、見えるものを3つ英語で言おう！",
+    hint:"I can see ___, ___, and ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"What is your favorite Pokémon?\n\nWhy?",
+    jp:"好きなポケモンは？\n\nなぜ？",
+    hint:"My favorite is ___ because ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"Where do you want to go?\n\nWhy?",
+    jp:"どこに行きたい？\n\nなぜ？",
+    hint:"I want to go to ___ because ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"What is one thing you're good at?",
+    jp:"<ruby>得意<rt>とくい</rt></ruby>なことを一つ言おう！",
+    hint:"I'm good at ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"What is something you do every day?",
+    jp:"<ruby>毎日<rt>まいにち</rt></ruby>することを英語で言おう！",
+    hint:"I always / usually ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"Name a cute Pokémon!",
+    jp:"かわいいポケモンを言おう！",
+    hint:"___ is cute!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"Name a cool Pokémon!",
+    jp:"かっこいいポケモンを言おう！",
+    hint:"___ is cool!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"If you could be any Pokémon, which one?\n\nWhy?",
+    jp:"もしポケモンになれるなら？\n\nなぜ？",
+    hint:"I would be ___ because ___!", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"What is your best memory from this year?",
+    jp:"今年の一番の思い出は？",
+    hint:"My best memory is ___!", effect:"+5", effectVal:5, type:"plus" },
+  // ── Ask someone! ──
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What did you do today?"',         jp:'誰かに聞こう：\n\n「What did you do today?」',      hint:"I ___!",                                           effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"Can you ___?"\n\n(pick any skill!)',jp:'誰かに聞こう：\n\n「Can you ___?」\n\n（何でもOK！）', hint:"Yes, I can! / No, I can't!",                        effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What is your favorite Pokémon?"', jp:'誰かに聞こう：\n\n「What is your favorite Pokémon?」', hint:"My favorite is ___!",                              effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What season do you like?\n\nWhy?"',jp:'誰かに聞こう：\n\n「What season do you like? Why?」',  hint:"I like ___ because ___!",                          effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What can you do very well?"',     jp:'誰かに聞こう：\n\n「What can you do very well?」',     hint:"I can ___ very well!",                             effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"Where do you want to go?"',       jp:'誰かに聞こう：\n\n「Where do you want to go?」',       hint:"I want to go to ___!",                             effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What is something you eat often?"',jp:'誰かに聞こう：\n\n「What do you eat often?」',         hint:"I often eat ___!",                                 effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What is your favorite color?"',   jp:'誰かに聞こう：\n\n「What is your favorite color?」',   hint:"My favorite color is ___!",                        effect:"+5", effectVal:5, type:"plus" },
+  // ── Special! ──
+  { cat:"⭐ Special!", en:'Everyone say one word that starts with "S"!\n\nNo repeats!', jp:'「S」で始まる英語の言葉をひとつずつ言おう！\n\nかぶったらアウト！', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"⭐ Special!", en:'Everyone say one word that starts with "P"!\n\nNo repeats!', jp:'「P」で始まる英語の言葉をひとつずつ言おう！\n\nかぶったらアウト！', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"⭐ Special!", en:"Everyone say one Pokémon!\n\nNo repeats!",                   jp:"ポケモンを一匹ずつ言おう！\n\nかぶったらアウト！",                   effect:"+5", effectVal:5, type:"plus" },
+  { cat:"⭐ Special!", en:"Everyone strike a pose! 📸",                                 jp:"みんなポーズ！📸",                                                   effect:"+5", effectVal:5, type:"plus" },
+  // ── Janken! ──
+  { cat:"✊ Janken!", en:"Janken with someone!\n\nWinner gets 1 material coin!",                   jp:"誰かとじゃんけん！\n\n勝った人はそざいコイン1枚もらう！",           effect:"Special!", effectVal:0, type:"special" },
+  { cat:"✊ Janken!", en:"Everyone janken!\n\nWinner gets 1 material coin AND 1 Encounter Card!", jp:"みんなでじゃんけん！\n\n<ruby>優勝<rt>ゆうしょう</rt></ruby>した人はそざいコイン1枚＋であいカード1枚！", effect:"Special!", effectVal:0, type:"special" },
+  { cat:"✊ Janken!", en:"Janken with someone!\n\nLoser gives the winner 1 material coin!",        jp:"誰かとじゃんけん！\n\n負けた人は勝った人にそざいコイン1枚わたす！",   effect:"Special!", effectVal:0, type:"special" },
+  // ── Lucky! x2 ──
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nDraw 1 Encounter Card into your hand!", jp:"ラッキー！\n\nであいカードを1枚引こう！",   effect:"Draw card!", effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nDraw 1 Encounter Card into your hand!", jp:"ラッキー！\n\nであいカードを1枚引こう！",   effect:"Draw card!", effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 1 material coin!",                 jp:"ラッキー！\n\nそざいコインを1枚もらおう！", effect:"+1 coin",    effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 1 material coin!",                 jp:"ラッキー！\n\nそざいコインを1枚もらおう！", effect:"+1 coin",    effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 2 material coins!",                jp:"ラッキー！\n\nそざいコインを2枚もらおう！", effect:"+2 coins",   effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 2 material coins!",                jp:"ラッキー！\n\nそざいコインを2枚もらおう！", effect:"+2 coins",   effectVal:0, type:"lucky" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nGauge goes up!",                        jp:"ラッキー！\n\nゲージがあがる！",           effect:"+5",         effectVal:5, type:"plus" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nGauge goes up!",                        jp:"ラッキー！\n\nゲージがあがる！",           effect:"+5",         effectVal:5, type:"plus" },
+  // ── Swap! ──
+  { cat:"🔄 Swap!", en:"Swap one Encounter Card\nwith another player!", jp:"であいカードを誰かと\n1枚交換しよう！", effect:"Swap cards", effectVal:0, type:"swap" },
+  { cat:"🔄 Swap!", en:"Swap one Encounter Card\nwith the pile!",       jp:"であいカードを山と\n1枚交換しよう！",   effect:"Swap cards", effectVal:0, type:"swap" },
+  // ── Oops! ──
+  { cat:"😱 Oops!", en:"Ditto got confused!\n\nGauge −5…",                          jp:"メタモンが混乱した！\n\nゲージ−5…",            effect:"−5",       effectVal:-5, type:"minus" },
+  { cat:"😱 Oops!", en:"A storm came!\n\nGauge −5…",                                jp:"嵐が来た！\n\nゲージ−5…",                     effect:"−5",       effectVal:-5, type:"minus" },
+  { cat:"😱 Oops!", en:"Oops!\n\nGive 1 material coin to the player on your left!", jp:"あらら！\n\n左の人にそざいコイン1枚わたそう！", effect:"Special!", effectVal:0, type:"special" },
+  { cat:"😱 Oops!", en:"Uh oh!\n\nEveryone loses 1 material coin…",                 jp:"あらら！\n\nみんなそざいコインを1枚返そう…",   effect:"Special!", effectVal:0, type:"special" },
+];
+
+/* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+let gauge       = 0;
+let playerCount = 4;
+let materials   = [0,0,0,0,0,0];
+let dittoIndex  = 0;
+let dittoDeck   = [];
+let activeCard  = null;
+let activeDeck  = null; // 'easy' | 'hard' | null
+
+const PLAYER_EMOJIS = ['🔴','🔵','🟢','🟡','🟣','🟠'];
+const PLAYER_COLORS = ['#ffd8d8','#d0e8ff','#d0fce0','#fff8c0','#eed8ff','#ffe4c0'];
+
+/* ═══════════════════════════════════════
+   DECK SELECTION
+═══════════════════════════════════════ */
+function showDeckSelector() {
+  document.getElementById('deck-selector').style.display = 'block';
+  document.getElementById('deck-label').style.display    = 'none';
+  document.getElementById('ditto-area').innerHTML        = '';
+}
+
+function selectDeck(which) {
+  soundTap();
+  activeDeck  = which;
+  const raw   = which === 'easy' ? EASY_DECK_RAW : HARD_DECK_RAW;
+  dittoDeck   = shuffle([...raw]);
+  dittoIndex  = 0;
+  activeCard  = null;
+  document.getElementById('deck-selector').style.display = 'none';
+  document.getElementById('deck-label').style.display    = 'block';
+  const labelEl = document.getElementById('deck-label-text');
+  if (which === 'easy') {
+    labelEl.textContent = '🌱 EASY / かんたん';
+    labelEl.style.background = 'var(--green-pale)';
+    labelEl.style.color      = 'var(--green-dark)';
+  } else {
+    labelEl.textContent = '🔥 HARD / むずかしい';
+    labelEl.style.background = '#feecd0';
+    labelEl.style.color      = '#8a3a08';
+  }
+  renderCardBack();
+}
+
+function resetDeckChoice() {
+  activeDeck = null;
+  dittoDeck  = [];
+  dittoIndex = 0;
+  activeCard = null;
+  showDeckSelector();
+}
+
+/* ═══════════════════════════════════════
+   SHUFFLE
+═══════════════════════════════════════ */
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+/* ═══════════════════════════════════════
+   TABS
+═══════════════════════════════════════ */
+function showTab(name) {
+  ['gauge','ditto','materials','rules'].forEach(t => {
+    document.getElementById('tab-' + t).classList.toggle('active', t === name);
+    document.getElementById('content-' + t).classList.toggle('active', t === name);
+  });
+}
+
+function toggleSection(header) {
+  header.classList.toggle('open');
+  header.nextElementSibling.classList.toggle('open');
+}
+
+
+/* ═══════════════════════════════════════
+   GAUGE LEVELS & UI UPDATE
+═══════════════════════════════════════ */
+const GAUGE_LEVELS = [
+  { max:9,   en:"Environment Level 0", jp:"かんきょうレベル 0", fill:"linear-gradient(90deg,#c8a060,#d8b860)" },
+  { max:24,  en:"Environment Level 1", jp:"かんきょうレベル 1", fill:"linear-gradient(90deg,#a0c860,#b8d868)" },
+  { max:49,  en:"Environment Level 2", jp:"かんきょうレベル 2", fill:"linear-gradient(90deg,#78c050,#98d868)" },
+  { max:74,  en:"Environment Level 3", jp:"かんきょうレベル 3", fill:"linear-gradient(90deg,#58a838,#78c858)" },
+  { max:99,  en:"Environment Level 4", jp:"かんきょうレベル 4", fill:"linear-gradient(90deg,#d060a0,#e890c8)" },
+  { max:100, en:"🌟 Environment Level 5 — YOU WIN!", jp:"かんきょうレベル 5 — みんなの勝利！", fill:"linear-gradient(90deg,#f8d040,#ffc020)" },
+];
+
+function updateGaugeUI() {
+  const el = document.getElementById('gauge-num');
+  el.textContent = gauge;
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+
+  const level = GAUGE_LEVELS.find(l => gauge <= l.max) || GAUGE_LEVELS[5];
+  document.getElementById('gauge-label-en').textContent = level.en;
+  document.getElementById('gauge-label-jp').textContent = level.jp;
+  const fill = document.getElementById('gauge-fill');
+  fill.style.width      = gauge + '%';
+  fill.style.background = level.fill;
+}
+
+/* ═══════════════════════════════════════
+   PLAYERS / MATERIALS
+═══════════════════════════════════════ */
+function changePlayers(delta) {
+  playerCount = Math.max(2, Math.min(6, playerCount + delta));
+  document.getElementById('player-count').textContent = playerCount;
+  renderPlayers();
+}
+
+function renderPlayers() {
+  const grid = document.getElementById('players-grid');
+  grid.innerHTML = '';
+  for (let i = 0; i < playerCount; i++) {
+    const card = document.createElement('div');
+    card.className = 'player-card';
+    card.style.borderColor = PLAYER_COLORS[i];
+    card.style.background  = PLAYER_COLORS[i] + '55';
+    card.innerHTML = `
+      <div class="player-emoji">${PLAYER_EMOJIS[i]}</div>
+      <div class="player-name">Player ${i+1}</div>
+      <div class="mat-count" id="mat-${i}">${materials[i]}</div>
+      <div class="mat-label">そざいコイン</div>
+      <div class="mat-controls">
+        <button class="mc-btn mc-minus" onclick="soundButtonPress();changeMat(${i},-1)">−</button>
+        <button class="mc-btn mc-plus"  onclick="soundCoin();changeMat(${i},+1)">＋</button>
+      </div>`;
+    grid.appendChild(card);
+  }
+}
+
+function changeMat(i, delta) {
+  materials[i] = Math.max(0, materials[i] + delta);
+  const el = document.getElementById('mat-' + i);
+  el.textContent = materials[i];
+  el.classList.remove('pop');
+  void el.offsetWidth;
+  el.classList.add('pop');
+}
+
+/* ═══════════════════════════════════════
+   SOUND ENGINE
+═══════════════════════════════════════ */
+let audioCtx = null;
+function getAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playTone(freq, type, duration, volume, delay=0, freqEnd=null) {
+  try {
+    const ctx = getAudio();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+    if (freqEnd) osc.frequency.exponentialRampToValueAtTime(freqEnd, ctx.currentTime + delay + duration);
+    gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+    gain.gain.linearRampToValueAtTime(volume, ctx.currentTime + delay + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+    osc.start(ctx.currentTime + delay);
+    osc.stop(ctx.currentTime + delay + duration + 0.05);
+  } catch(e) {}
+}
+
+// Soft tap for minor buttons
+function soundTap() {
+  playTone(600, 'sine', 0.07, 0.15);
+}
+
+// Whoosh + shimmer for drawing a card
+function soundCardDraw() {
+  playTone(200, 'sawtooth', 0.18, 0.08, 0, 800);
+  playTone(880, 'sine', 0.12, 0.14, 0.12);
+  playTone(1100, 'sine', 0.10, 0.10, 0.2);
+}
+
+// ✅ Done! — bright celebratory 3-note pop (positive only)
+function soundDone() {
+  playTone(523, 'sine', 0.15, 0.22);
+  playTone(784, 'sine', 0.15, 0.22, 0.12);
+  playTone(1047,'sine', 0.25, 0.22, 0.24);
+}
+
+// 🪙 Coin — metallic clink
+function soundCoin() {
+  playTone(2800, 'sine', 0.06, 0.18);
+  playTone(4200, 'sine', 0.04, 0.10, 0.03);
+  playTone(2100, 'sine', 0.12, 0.08, 0.05);
+}
+
+// Skip — soft descending thud, feels "lesser"
+function soundSkip() {
+  playTone(300, 'triangle', 0.12, 0.10);
+  playTone(220, 'triangle', 0.12, 0.08, 0.1);
+}
+
+// Level up — dramatic ascending fanfare
+function soundLevelUp() {
+  playTone(523, 'sine', 0.18, 0.25);
+  playTone(659, 'sine', 0.18, 0.25, 0.13);
+  playTone(784, 'sine', 0.18, 0.25, 0.26);
+  playTone(1047,'sine', 0.30, 0.28, 0.39);
+  playTone(1319,'sine', 0.35, 0.25, 0.52);
+  // shimmer on top
+  playTone(2093,'sine', 0.20, 0.10, 0.55);
+}
+
+// Level down — heavy descending thud + rumble
+function soundLevelDown() {
+  playTone(280, 'sawtooth', 0.20, 0.15, 0, 120);
+  playTone(180, 'triangle', 0.30, 0.20, 0.12);
+  playTone(100, 'triangle', 0.40, 0.18, 0.28);
+}
+
+// Win — full fanfare
+function soundWin() {
+  const melody = [523,659,784,659,1047,784,1047,1319,1568];
+  melody.forEach((f,i) => playTone(f,'sine', i===melody.length-1?0.6:0.2, 0.25, i*0.12));
+  // sparkle layer
+  [2093,2637,3136].forEach((f,i) => playTone(f,'sine',0.15,0.12, 0.5+i*0.1));
+}
+
+// Minor button press
+function soundButtonPress() {
+  playTone(350, 'sine', 0.06, 0.10);
+}
+
+/* ═══════════════════════════════════════
+   LEVEL-UP TOAST — shows on ALL tabs
+═══════════════════════════════════════ */
+function showToast(msg, color) {
+  const old = document.getElementById('level-toast');
+  if (old) old.remove();
+  const t = document.createElement('div');
+  t.id = 'level-toast';
+  t.style.cssText = `
+    position:fixed; top:76px; left:50%; transform:translateX(-50%) translateY(-30px);
+    background:${color}; color:white; font-family:'Comic Relief','Kosugi Maru','Zen Maru Gothic',sans-serif;
+    font-weight:900; font-size:1rem; padding:11px 22px; border-radius:50px;
+    box-shadow:0 6px 24px rgba(0,0,0,0.25); z-index:500; white-space:nowrap;
+    animation: toastIn 0.4s cubic-bezier(.34,1.56,.64,1) forwards;
+    pointer-events:none;
+  `;
+  t.textContent = msg;
+  if (!document.getElementById('toast-style')) {
+    const s = document.createElement('style');
+    s.id = 'toast-style';
+    s.textContent = `
+      @keyframes toastIn  { from{opacity:0;transform:translateX(-50%) translateY(-30px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+      @keyframes toastOut { from{opacity:1;transform:translateX(-50%) translateY(0)} to{opacity:0;transform:translateX(-50%) translateY(-20px)} }
+    `;
+    document.head.appendChild(s);
+  }
+  document.body.appendChild(t);
+  setTimeout(() => { t.style.animation='toastOut 0.3s ease forwards'; setTimeout(()=>t.remove(), 350); }, 2400);
+}
+
+/* ═══════════════════════════════════════
+   GAUGE (with sound + toast, any tab)
+═══════════════════════════════════════ */
+function changeGauge(delta, fromDone=false) {
+  const oldLevel = GAUGE_LEVELS.findIndex(l => gauge <= l.max);
+  gauge = Math.max(0, Math.min(100, gauge + delta));
+  const newLevel = GAUGE_LEVELS.findIndex(l => gauge <= l.max);
+  updateGaugeUI();
+  updateMiniGauge();
+  if (newLevel > oldLevel) {
+    soundLevelUp();
+    showToast('🎚️ Level Up! かんきょうレベル アップ！', '#62a855');
+  } else if (newLevel < oldLevel) {
+    soundLevelDown();
+    showToast('📉 Level Down… ゲージが下がった…', '#e85050');
+  } else if (fromDone && delta > 0) {
+    soundDone();
+    showToast(`✅ +${delta}！ ゲージがあがった！`, '#7a50b8');
+  } else if (fromDone && delta < 0) {
+    soundLevelDown();
+    showToast(`😱 ${delta}… ゲージがさがった…`, '#e85050');
+  } else {
+    soundTap();
+  }
+  if (gauge >= 100) {
+    soundWin();
+    setTimeout(() => document.getElementById('win-overlay').classList.add('show'), 600);
+  }
+}
+
+function updateMiniGauge() {
+  const bar = document.getElementById('mini-gauge-fill');
+  const num = document.getElementById('mini-gauge-num');
+  if (!bar || !num) return;
+  const level = GAUGE_LEVELS.find(l => gauge <= l.max) || GAUGE_LEVELS[5];
+  bar.style.width = gauge + '%';
+  bar.style.background = level.fill;
+  num.textContent = gauge;
+}
+
+/* ═══════════════════════════════════════
+   DITTO CARDS
+═══════════════════════════════════════ */
+const CAT_JP = {
+  '📖 Read it!':          '読んでみよう！',
+  '🤔 English for this?': '英語で何て言う？',
+  '🔢 Count the board!':  'ボードを数えよう！',
+  '💬 Say it!':           '言ってみよう！',
+  '🙋 Ask a friend!':     '友だちに聞こう！',
+  '🙋 Ask someone!':      '誰かに聞こう！',
+  '⭐ Special!':           'スペシャル！',
+  '✊ Janken!':            'じゃんけん！',
+  '🍀 Lucky!':            'ラッキー！',
+  '🔄 Swap!':             'こうかん！',
+  '😱 Oops!':             'あらら！',
+};
+
+function effectLabel(c) {
+  if (c.effectVal > 0) return `✨🎚️ Gauge / ゲージ +${c.effectVal}`;
+  if (c.effectVal < 0) return `✨🎚️ Gauge / ゲージ ${c.effectVal}`;
+  return `✨ ${c.effect}`;
+}
+
+function effectClass(type) {
+  if (type === 'plus')    return 'effect-plus';
+  if (type === 'minus')   return 'effect-minus';
+  if (type === 'special') return 'effect-special';
+  if (type === 'lucky')   return 'effect-lucky';
+  if (type === 'swap')    return 'effect-swap';
+  return 'effect-plus';
+}
+
+function renderCardBack() {
+  if (!activeDeck) { showDeckSelector(); return; }
+  const remaining = dittoDeck.length - dittoIndex;
+  document.getElementById('ditto-area').innerHTML = `
+    <div class="card-draw-btn" onclick="soundCardDraw();drawDittoCard()">
+      <div class="card-back-face">
+        <span class="card-back-icon">❗</span>
+        <div class="card-back-en">Draw a Ditto Card!</div>
+        <div class="card-back-jp">メタモンカードを引こう！</div>
+      </div>
+    </div>
+    <div class="deck-remaining">${remaining} cards left / 残り${remaining}枚</div>`;
+}
+
+function drawDittoCard() {
+  if (!activeDeck) return;
+  const raw = activeDeck === 'easy' ? EASY_DECK_RAW : HARD_DECK_RAW;
+  if (dittoIndex >= dittoDeck.length) {
+    dittoDeck = shuffle([...raw]);
+    dittoIndex = 0;
+  }
+  activeCard = dittoDeck[dittoIndex++];
+  renderActiveCard();
+}
+
+function renderActiveCard() {
+  const c = activeCard;
+  const area = document.getElementById('ditto-area');
+  const catJp = CAT_JP[c.cat] || '';
+
+  let wordBlock = '';
+  if (c.word) {
+    wordBlock = `<div style="
+      font-size:2.4rem; font-weight:900; letter-spacing:4px;
+      font-family:'Comic Relief','Kosugi Maru','Zen Maru Gothic',sans-serif;
+      color:var(--purple-dark); text-align:center;
+      background:var(--purple-pale); border-radius:16px;
+      padding:18px 12px; margin:14px 0;">
+      ${c.word}
+    </div>`;
+  }
+
+  let answerBlock = '';
+  if (c.answer) {
+    const safeAnswer = c.answer.replace(/'/g, "\\'");
+    answerBlock = `
+      <div id="answer-reveal" style="margin:14px 0;">
+        <button
+          onclick="soundTap();this.parentNode.innerHTML='<div style=\\'font-size:2rem;font-weight:900;color:var(--green-dark);text-align:center;background:var(--green-pale);border-radius:16px;padding:16px 12px;\\'>${safeAnswer}</div>'"
+          style="width:100%;padding:13px;border-radius:14px;border:2px dashed var(--purple);
+          background:var(--purple-pale);color:var(--purple-dark);
+          font-family:'Comic Relief','Kosugi Maru','Zen Maru Gothic',sans-serif;
+          font-weight:900;font-size:1rem;cursor:pointer;letter-spacing:1px;">
+          OPEN ／ こたえを見る
+        </button>
+      </div>`;
+  }
+
+  let hintBlock = '';
+  if (c.hint) {
+    hintBlock = `
+      <div style="margin-top:14px; padding:14px 16px; background:#f8f0e0; border-radius:14px; line-height:1.6;">
+        <div style="font-size:0.72rem;font-weight:700;color:var(--brown);margin-bottom:6px;letter-spacing:0.5px;">ヒント / Hint</div>
+        <div style="font-size:1.05rem;font-weight:700;color:var(--brown);">${c.hint}</div>
+      </div>`;
+  }
+
+  const enText = c.en.replace(/\n/g, '<br>');
+  const jpText = c.jp ? c.jp.replace(/\n/g, '<br>') : '';
+
+  area.innerHTML = `
+    <div class="ditto-card">
+      <div class="ditto-card-top">
+        <div class="ditto-card-badge">❗ Ditto Card</div>
+        <div class="ditto-card-category">
+          ${c.cat}<br>
+          <span style="font-size:0.75rem;opacity:0.9;">${catJp}</span>
+        </div>
+      </div>
+      <div class="ditto-card-body">
+        <div class="ditto-card-en">${enText}</div>
+        ${wordBlock}
+        ${c.jp ? `<div class="ditto-card-jp">${jpText}</div>` : ''}
+        ${answerBlock}
+        ${hintBlock}
+        <div style="height:12px"></div>
+        <div class="ditto-card-effect ${effectClass(c.type)}">${effectLabel(c)}</div>
+      </div>
+      <div class="ditto-card-footer">
+        <div class="ditto-icon-area">
+          <img src="ditto-icon.png" alt="Ditto"
+               onerror="this.style.display='none';this.parentNode.innerHTML='<div class=\\'ditto-icon-placeholder\\'>ditto-icon<br>.png</div>'">
+        </div>
+        <div class="card-resolve-btns-row">
+          <button class="resolve-btn resolve-done" onclick="resolveCard(true)">
+            ✅<br>Done!<br><span style="font-size:0.72rem;font-weight:500;">できた！</span>
+          </button>
+          <button class="resolve-btn resolve-discard" onclick="soundSkip();resolveCard(false)">
+            ↩<br>Skip<br><span style="font-size:0.72rem;font-weight:500;opacity:0.7;">スキップ</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="deck-remaining">${dittoDeck.length - dittoIndex} cards left / 残り${dittoDeck.length - dittoIndex}枚</div>`;
+}
+
+function resolveCard(success) {
+  if (success && activeCard) {
+    if (activeCard.effectVal !== 0) {
+      changeGauge(activeCard.effectVal, true);
+    } else {
+      soundDone();
+    }
+  }
+  activeCard = null;
+  renderCardBack();
+}
+
+/* ═══════════════════════════════════════
+   WIN / RESET
+═══════════════════════════════════════ */
+function closeWin() {
+  document.getElementById('win-overlay').classList.remove('show');
+  soundTap();
+}
+
+function confirmReset() {
+  if (confirm('Reset the game? / ゲームをリセットしますか？')) resetAll();
+}
+
+function resetAll() {
+  gauge         = 0;
+  materials     = [0,0,0,0,0,0];
+  playerCount   = 4;
+  dittoIndex    = 0;
+  dittoDeck     = [];
+  activeDeck    = null;
+  activeCard    = null;
+  document.getElementById('player-count').textContent = '4';
+  updateGaugeUI();
+  updateMiniGauge();
+  renderPlayers();
+  showDeckSelector();
+  closeWin();
+}
+
+/* ═══════════════════════════════════════
+   INIT
+═══════════════════════════════════════ */
+updateGaugeUI();
+updateMiniGauge();
+renderPlayers();
+showDeckSelector();
+</script>
+</body>
+</html>
