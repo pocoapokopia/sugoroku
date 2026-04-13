@@ -649,6 +649,40 @@ hr.dash {
   margin-right: 2px;
   position: relative; top: -1px;
 }
+.coin-icon-inline {
+  display: inline-block;
+  width: 1em; height: 1em;
+  vertical-align: middle;
+  object-fit: contain;
+  margin-right: 2px;
+  position: relative; top: -1px;
+}
+.leaf-icon-inline {
+  display: inline-block;
+  width: 1em; height: 1em;
+  vertical-align: middle;
+  object-fit: contain;
+  margin-right: 2px;
+  position: relative; top: -1px;
+}
+.card-icon-inline {
+  display: inline-block;
+  width: 1em; height: 1em;
+  vertical-align: middle;
+  object-fit: contain;
+  margin-right: 2px;
+  position: relative; top: -1px;
+}
+.check-icon img {
+  width: 1.2rem; height: 1.2rem;
+  object-fit: contain;
+  vertical-align: middle;
+}
+.score-row img.score-icon {
+  width: 1.3rem; height: 1.3rem;
+  object-fit: contain;
+  vertical-align: middle;
+}
 
 /* ─────────────────────────────────────────
    RULES TAB
@@ -856,7 +890,7 @@ hr.dash {
         <span style="font-size:0.82rem;color:var(--brown)">人</span>
       </div>
       <hr class="dash">
-      <div class="panel-title">🪙 Material Coins <span class="jp">そざいコイン</span></div>
+      <div class="panel-title"><img src="tab-material.png" alt="Material Coin" class="coin-icon-inline" onerror="this.outerHTML='🪙'"> Material Coins <span class="jp">そざいコイン</span></div>
       <div class="players-grid" id="players-grid"></div>
     </div>
   </div>
@@ -1193,7 +1227,7 @@ hr.dash {
           </div>
         </div>
 
-        <div style="margin:10px 0 6px; font-size:0.75rem; font-weight:900; color:var(--brown);">🌿 On a Grass Patch Tile — Play an Encounter Card! / くさむらタイルでやること</div>
+        <div style="margin:10px 0 6px; font-size:0.75rem; font-weight:900; color:var(--brown);"><img src="tile-grass.png" alt="Grass" class="leaf-icon-inline" onerror="this.outerHTML='🌿'"> On a Grass Patch Tile — Play an Encounter Card! / くさむらタイルでやること</div>
 
         <div class="enc-info-row">
           <div class="enc-dot" style="background:#7a50b8;"></div>
@@ -1288,14 +1322,14 @@ hr.dash {
         <div style="font-size:0.75rem; font-weight:900; color:var(--brown); margin-bottom:8px;"><ruby>建設<rt>けんせつ</rt></ruby><ruby>条件<rt>じょうけん</rt></ruby> / Building requirements:</div>
 
         <div class="poke-center-check">
-          <div class="check-icon">🃏</div>
+          <div class="check-icon"><img src="section-encounter.png" alt="Encounter Card" onerror="this.outerHTML='🃏'"></div>
           <div>
             <div class="check-en">Total face-up Encounter Cards ≥ number of players</div>
             <div class="check-jp"><ruby>全員<rt>ぜんいん</rt></ruby>の<ruby>表向<rt>おもてむ</rt></ruby>きであいカード<ruby>合計<rt>ごうけい</rt></ruby> ≥ プレイヤーの人数</div>
           </div>
         </div>
         <div class="poke-center-check">
-          <div class="check-icon">🪙</div>
+          <div class="check-icon"><img src="tab-material.png" alt="Material Coin" onerror="this.outerHTML='🪙'"></div>
           <div>
             <div class="check-en">Every player contributes 2 Material Coins</div>
             <div class="check-jp"><ruby>全員<rt>ぜんいん</rt></ruby>がそざいコインを2枚ずつ出す</div>
@@ -1336,7 +1370,7 @@ hr.dash {
           <span style="font-size:0.72rem; color:var(--brown);">ゲームが終わったら、<ruby>個人<rt>こじん</rt></ruby>スコアを数えよう：</span>
         </div>
         <div class="score-row" style="background:var(--green-pale);">
-          <span style="font-size:1.3rem;">🃏</span>
+          <span style="font-size:1.3rem;"><img src="section-encounter.png" alt="Encounter Card" class="score-icon" onerror="this.outerHTML='🃏'"></span>
           <div>
             <div style="font-size:0.85rem; font-weight:900; color:var(--green-dark);">Points on face-up Encounter Cards</div>
             <div style="font-size:0.72rem; color:#4a7a40;"><ruby>表向<rt>おもてむ</rt></ruby>きであいカードのポイント<ruby>合計<rt>ごうけい</rt></ruby></div>
@@ -1344,7 +1378,7 @@ hr.dash {
         </div>
         <div style="text-align:center; font-size:1.1rem; font-weight:900; color:var(--brown); padding:2px 0;">＋</div>
         <div class="score-row" style="background:var(--orange-pale);">
-          <span style="font-size:1.3rem;">🪙</span>
+          <span style="font-size:1.3rem;"><img src="tab-material.png" alt="Material Coin" class="score-icon" onerror="this.outerHTML='🪙'"></span>
           <div>
             <div style="font-size:0.85rem; font-weight:900; color:#884010;">Material Coins remaining in hand</div>
             <div style="font-size:0.72rem; color:#a05020;"><ruby>手持<rt>てもち</rt></ruby>ちのそざいコインの<ruby>枚数<rt>まいすう</rt></ruby></div>
