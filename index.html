@@ -805,7 +805,9 @@ hr.dash {
 <body>
 <div class="app">
 
+  <!-- ══ HEADER ══ -->
   <div class="header">
+    <!-- When you add logo.png to the repo, this will show automatically -->
     <img src="logo.png" alt="ぽこあ Pokopia" class="logo-img"
          onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='flex';">
     <div class="logo-placeholder" id="logo-fallback" style="display:none">
@@ -814,6 +816,7 @@ hr.dash {
     <div class="header-sub">Game Companion App • ゲームサポートアプリ</div>
   </div>
 
+  <!-- ══ TABS ══ -->
   <div class="tabs">
     <button class="tab active" id="tab-gauge" onclick="showTab('gauge')">
       <span class="tab-icon"><img src="tab-gauge.png" alt="Gauge" onerror="this.outerHTML='🎚️'"></span>
@@ -837,6 +840,9 @@ hr.dash {
     </button>
   </div>
 
+  <!-- ══════════════════════════════════════
+       GAUGE TAB
+  ══════════════════════════════════════ -->
   <div class="tab-content active" id="content-gauge">
     <div class="panel">
       <div class="panel-title"><img src="tab-gauge.png" alt="Gauge" class="gauge-icon-inline" onerror="this.outerHTML='🎚️'"> Environment Gauge <span class="jp">かんきょうゲージ</span></div>
@@ -862,8 +868,8 @@ hr.dash {
         <button class="g-btn gb-purple" onclick="soundTap();changeGauge(10)">+10<span class="lbl">ポケモンと出会った！(コイン2枚)<br>Pokémon Encountered! (2 coins)</span></button>
         <button class="g-btn gb-orange" onclick="soundTap();changeGauge(15)">+15<span class="lbl">ポケモンと出会った！(コイン3枚)<br>Pokémon Encountered! (3 coins)</span></button>
         <button class="g-btn gb-blue"   onclick="soundTap();changeGauge(5)">+5<span class="lbl">モジャンボはかせのタイル<br>Prof. Tangrowth tile</span></button>
-        <button class="g-btn gb-yellow" onclick="soundTap();changeGauge(25)">+25<span class="lbl">ポケモンセンター完成！<br>Pokémon Center Finished!</span></button>
-        <button class="g-btn gb-red"    onclick="soundTap();changeGauge(-5)">−5<span class="lbl">悪いメタモンカード<br>Bad Ditto Card!</span></button>
+        <button class="g-btn gb-yellow" onclick="soundTap();changeGauge(25)">+25<span class="lbl">ポケモンセンター完成！<br>Pokémon Center completed!</span></button>
+        <button class="g-btn gb-red"    onclick="soundTap();changeGauge(-5)">−5<span class="lbl">悪いメタモンカード<br>Bad Ditto Card drawn</span></button>
       </div>
     </div>
     <div class="reset-row">
@@ -871,6 +877,9 @@ hr.dash {
     </div>
   </div>
 
+  <!-- ══════════════════════════════════════
+       MATERIALS TAB
+  ══════════════════════════════════════ -->
   <div class="tab-content" id="content-materials">
     <div class="panel">
       <div class="panel-title">👥 Players <span class="jp">プレイヤーの数</span></div>
@@ -886,10 +895,14 @@ hr.dash {
     </div>
   </div>
 
+  <!-- ══════════════════════════════════════
+       DITTO CARDS TAB
+  ══════════════════════════════════════ -->
   <div class="tab-content" id="content-ditto">
     <div class="panel">
       <div class="panel-title">❗ Ditto Card <span class="jp">メタモンカード</span></div>
 
+      <!-- Deck Selector -->
       <div id="deck-selector" style="display:none; margin-bottom:14px;">
         <div style="font-size:0.72rem; font-weight:700; color:var(--brown); text-align:center; margin-bottom:10px; letter-spacing:0.5px;">
           Choose a deck! / デッキをえらぼう！
@@ -914,6 +927,7 @@ hr.dash {
         </div>
       </div>
 
+      <!-- Active deck label -->
       <div id="deck-label" style="display:none; text-align:center; margin-bottom:10px;">
         <span id="deck-label-text" style="font-size:0.72rem; font-weight:700; padding:4px 14px; border-radius:50px; background:var(--green-pale); color:var(--green-dark);"></span>
         <button onclick="soundButtonPress();resetDeckChoice()" style="
@@ -923,6 +937,7 @@ hr.dash {
         </button>
       </div>
 
+      <!-- Mini Gauge -->
       <div style="background:#f0ece0; border-radius:16px; padding:10px 14px 12px; margin-bottom:14px;">
         <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
           <span style="font-size:0.68rem; font-weight:700; color:var(--green-dark); text-transform:uppercase; letter-spacing:1px;"><img src="tab-gauge.png" alt="Gauge" class="gauge-icon-inline" onerror="this.outerHTML='🎚️'"> Gauge / ゲージ</span>
@@ -937,6 +952,9 @@ hr.dash {
     </div>
   </div>
 
+  <!-- ══════════════════════════════════════
+       RULES TAB
+  ══════════════════════════════════════ -->
   <div class="tab-content" id="content-rules">
   <div class="rules-wrap">
     <div class="rules-section">
@@ -951,23 +969,30 @@ hr.dash {
       <div class="rules-section-body open">
         <ul class="rules-steps">
           <li>
+            <div class="step-num" style="background:var(--orange); min-width:1.55rem; font-size:0.62rem;">START</div>
+            <div class="step-text">
+              <div class="s-en">Each player draws <strong>3–5 Encounter Cards</strong> and takes <strong>3 material coins</strong>.</div>
+              <div class="s-jp">各プレイヤーはであいカードを<strong>3〜5枚</strong>引き、そざいコインを<strong>3枚</strong>もらう。</div>
+            </div>
+          </li>
+          <li>
             <div class="step-num">1</div>
             <div class="step-text">
-              <div class="s-en">Roll the dice. Move your piece.</div>
+              <div class="s-en">Roll the die and move forward that many spaces.</div>
               <div class="s-jp">さいころをふって、出た目の数だけ前に進む。</div>
             </div>
           </li>
           <li>
             <div class="step-num">2</div>
             <div class="step-text">
-              <div class="s-en">Check the tile (see Tile Guide below).</div>
-              <div class="s-jp">止まったタイルのアクションをする（下のタイルガイドを見よう）。</div>
+              <div class="s-en">Resolve the tile you landed on (see Tile Guide below).</div>
+              <div class="s-jp">止まったタイルの<ruby>効果<rt>こうか</rt></ruby>を<ruby>実行<rt>じっこう</rt></ruby>する（下のタイルガイドを見よう）。</div>
             </div>
           </li>
           <li>
             <div class="step-num">3</div>
             <div class="step-text">
-              <div class="s-en">Pass the dice to the left.</div>
+              <div class="s-en">Pass the die clockwise to the next player.</div>
               <div class="s-jp"><ruby>時計回り<rt>とけいまわり</rt></ruby>に次のプレイヤーにさいころを渡す。</div>
             </div>
           </li>
@@ -977,7 +1002,7 @@ hr.dash {
           <div style="display:flex; gap:8px; align-items:flex-start; margin-bottom:6px;">
             <span style="font-size:1rem; flex-shrink:0;">1️⃣</span>
             <div>
-              <div style="font-size:0.78rem; font-weight:700; color:var(--green-dark);">Everyone finishes</div>
+              <div style="font-size:0.78rem; font-weight:700; color:var(--green-dark);">Everyone reaches GOAL</div>
               <div style="font-size:0.68rem; color:#4a7a40;">全員がゴールに着いたとき</div>
             </div>
           </div>
@@ -999,6 +1024,7 @@ hr.dash {
       </div>
     </div>
 
+    <!-- ── SECTION 2: TILE GUIDE ── -->
     <div class="rules-section">
       <div class="rules-section-header open" onclick="toggleSection(this)">
         <span class="section-header-icon">
@@ -1010,6 +1036,7 @@ hr.dash {
       </div>
       <div class="rules-section-body open">
 
+        <!-- Material tile -->
         <div class="tile-row">
           <div class="tile-icon-wrap">
             <img src="tile-material.png" alt="Material Tile"
@@ -1018,12 +1045,13 @@ hr.dash {
           <div class="tile-info">
             <div class="tile-name-en">Material Tile</div>
             <div class="tile-name-jp">そざいタイル</div>
-            <div class="tile-effect-en">Take 1 coin.</div>
+            <div class="tile-effect-en">Take 1 Material Coin from the pile.</div>
             <div class="tile-effect-jp">山からそざいコインを1枚もらう。</div>
             <span class="tile-badge badge-green">+1 coin / コイン+1</span>
           </div>
         </div>
 
+        <!-- Ditto tile -->
         <div class="tile-row">
           <div class="tile-icon-wrap square">
             <img src="tile-ditto.png" alt="Ditto Tile"
@@ -1033,11 +1061,12 @@ hr.dash {
             <div class="tile-name-en">Ditto Tile</div>
             <div class="tile-name-jp">メタモンタイル</div>
             <div class="tile-effect-en">Draw a Ditto Card and do the challenge. Try your best!</div>
-            <div class="tile-effect-jp">メタモンカードを引いてチャレンジ！がんばろう！</div>
+            <div class="tile-effect-jp">メタモンカードを引いてチャレンジ！ベストを尽くそう！</div>
             <span class="tile-badge badge-purple">Challenge / チャレンジ</span>
           </div>
         </div>
 
+        <!-- Grass patch tile -->
         <div class="tile-row">
           <div class="tile-icon-wrap square">
             <img src="tile-grass.png" alt="Grass Patch Tile"
@@ -1046,14 +1075,15 @@ hr.dash {
           <div class="tile-info">
             <div class="tile-name-en">Grass Patch Tile</div>
             <div class="tile-name-jp">くさむらタイル</div>
-            <div class="tile-effect-en">Choose one Encounter Card from your hand, pay its coin cost, and do the challenge.</div>
-            <div class="tile-effect-jp">手持ちのカードを1枚えらび、コインを払ってチャレンジ！</div>
-            <div class="tile-effect-en" style="margin-top:4px; font-size:0.72rem; color:var(--brown);">💡 Grass patches come in various colors — they all work the same!</div>
-            <div class="tile-effect-jp" style="font-size:0.68rem; color:var(--brown);">くさむらは色が違っても効果は同じ！</div>
+            <div class="tile-effect-en">You must play an Encounter Card here! Choose one from your hand, pay its coin cost, and do the challenge.</div>
+            <div class="tile-effect-jp">であいカードを1枚プレイしよう！手持ちから1枚えらんで、コインを払って、チャレンジする。</div>
+            <div class="tile-effect-en" style="margin-top:4px; font-size:0.72rem; color:var(--brown);">💡 Only skip if you can't afford any card in your hand. Grass patches come in various colors — they all work the same!</div>
+            <div class="tile-effect-jp" style="font-size:0.68rem; color:var(--brown);">手持ちのカードを1枚も払えない時だけスキップOK。くさむらは色が違っても効果は同じ！</div>
             <span class="tile-badge badge-purple">Encounter Card / であいカード</span>
           </div>
         </div>
 
+        <!-- Arrow tile -->
         <div class="tile-row">
           <div class="tile-icon-wrap">
             <img src="tile-arrow.png" alt="Arrow Tile"
@@ -1062,14 +1092,15 @@ hr.dash {
           <div class="tile-info">
             <div class="tile-name-en">Arrow Tile</div>
             <div class="tile-name-jp">やじるしタイル</div>
-            <div class="tile-effect-en">Move forward or backward. Check the new tile.</div>
-            <div class="tile-effect-jp"><ruby>矢印<rt>やじるし</rt></ruby>の数だけ進む・戻る。止まったタイルのアクションもする。</div>
+            <div class="tile-effect-en">Move forward or backward the number shown, then resolve the new tile.</div>
+            <div class="tile-effect-jp"><ruby>矢印<rt>やじるし</rt></ruby>の数だけ進む・戻る。止まったタイルの<ruby>効果<rt>こうか</rt></ruby>も<ruby>実行<rt>じっこう</rt></ruby>する。</div>
             <span class="tile-badge badge-blue">Move / いどう</span>
           </div>
         </div>
 
         <div style="margin:10px 0 6px; font-size:0.72rem; font-weight:900; color:var(--brown); letter-spacing:0.5px; text-transform:uppercase;">NPC Tiles / NPCタイル</div>
 
+        <!-- Prof Tangrowth -->
         <div class="tile-row">
           <div class="tile-icon-wrap">
             <img src="npc-tangrowth.png" alt="モジャンボはかせ"
@@ -1078,14 +1109,15 @@ hr.dash {
           <div class="tile-info">
             <div class="tile-name-en">Professor Tangrowth</div>
             <div class="tile-name-jp">モジャンボはかせ</div>
-            <div class="tile-effect-en">Draw a Ditto Card and do the challenge. Gauge +5 + 1 material coin!</div>
-            <div class="tile-effect-jp">メタモンカードを引いてチャレンジ。そして、ゲージ+5 + そざいコイン1枚をもらう！</div>
+            <div class="tile-effect-en">Draw a Ditto Card and do the challenge. Try it → Gauge +5 + 1 material coin!</div>
+            <div class="tile-effect-jp">メタモンカードを引いてチャレンジ。やれば → ゲージ+5 + そざいコイン1枚！</div>
             <div class="tile-effect-en" style="margin-top:4px; font-size:0.72rem; color:var(--purple-dark);">💡 Go to the Gauge tab and tap the Prof. Tangrowth button to apply the +5!</div>
             <div class="tile-effect-jp" style="font-size:0.68rem; color:var(--brown);">ゲージタブのモジャンボはかせボタンを押して+5を適用しよう！</div>
             <span class="tile-badge badge-green">+5 gauge + 1 coin / ゲージ+5 + コイン1枚</span>
           </div>
         </div>
 
+        <!-- Peakychu -->
         <div class="tile-row">
           <div class="tile-icon-wrap">
             <img src="npc-peakychu.png" alt="うすチュウ"
@@ -1094,12 +1126,13 @@ hr.dash {
           <div class="tile-info">
             <div class="tile-name-en">Peakychu / うすチュウ</div>
             <div class="tile-name-jp">ドンヨリ海辺エリア</div>
-            <div class="tile-effect-en">Everyone gets 1 Material Coin!</div>
-            <div class="tile-effect-jp">みんなそざいコインを1枚もらう！</div>
+            <div class="tile-effect-en">Everyone gets 1 Material Coin! No challenge needed.</div>
+            <div class="tile-effect-jp">みんなそざいコインを1枚もらう！チャレンジなし。</div>
             <span class="tile-badge badge-yellow">Everyone! / みんな！</span>
           </div>
         </div>
 
+        <!-- Mosslax -->
         <div class="tile-row">
           <div class="tile-icon-wrap">
             <img src="npc-mosslax.png" alt="こけカビゴン"
@@ -1110,10 +1143,11 @@ hr.dash {
             <div class="tile-name-jp">ドンヨリ海辺エリア</div>
             <div class="tile-effect-en">Lose your next turn. Mosslax is too sleepy to help!</div>
             <div class="tile-effect-jp">次のターンをスキップ。こけカビゴンは眠すぎて助けてくれない！</div>
-            <span class="tile-badge badge-red">Lose a turn / 一回休み…</span>
+            <span class="tile-badge badge-red">Lose a turn / ターンスキップ</span>
           </div>
         </div>
 
+        <!-- Smearguru -->
         <div class="tile-row">
           <div class="tile-icon-wrap">
             <img src="npc-smearguru.png" alt="ドーブルせんせい"
@@ -1123,11 +1157,12 @@ hr.dash {
             <div class="tile-name-en">Smearguru / ドーブルせんせい</div>
             <div class="tile-name-jp">ドンヨリ海辺エリア</div>
             <div class="tile-effect-en">Draw a Ditto in 5 seconds! ✏️</div>
-            <div class="tile-effect-jp">5秒でメタモンを描こう！✏️</div>
+            <div class="tile-effect-jp">5秒でディットを描こう！✏️</div>
             <span class="tile-badge badge-orange">Draw! 5 secs / 5秒でお絵かき！</span>
           </div>
         </div>
 
+        <!-- Chef Dente -->
         <div class="tile-row">
           <div class="tile-icon-wrap">
             <img src="npc-chefdente.png" alt="シェフバリス"
@@ -1136,12 +1171,13 @@ hr.dash {
           <div class="tile-info">
             <div class="tile-name-en">Chef Dente / シェフバリス</div>
             <div class="tile-name-jp">ゴツゴツやまエリア</div>
-            <div class="tile-effect-en">You and one other player each get 2 Material Coins!</div>
+            <div class="tile-effect-en">You AND one other player each get 2 Material Coins!</div>
             <div class="tile-effect-jp">あなたともう一人のプレイヤーが、それぞれそざいコインを2枚もらう！</div>
             <span class="tile-badge badge-green">+2 coins each / 各+2コイン</span>
           </div>
         </div>
 
+        <!-- DJ Rotom -->
         <div class="tile-row">
           <div class="tile-icon-wrap">
             <img src="npc-djrotom.png" alt="アゲ↑ロトム"
@@ -1150,12 +1186,13 @@ hr.dash {
           <div class="tile-info">
             <div class="tile-name-en">DJ Rotom / アゲ↑ロトム</div>
             <div class="tile-name-jp">ゴツゴツやまエリア</div>
-            <div class="tile-effect-en">Take one more turn! 🎵</div>
+            <div class="tile-effect-en">Take another turn immediately! 🎵</div>
             <div class="tile-effect-jp">もう一回ターンを取る！🎵</div>
             <span class="tile-badge badge-blue">Extra turn! / もう一回！</span>
           </div>
         </div>
 
+        <!-- Tinkmaster -->
         <div class="tile-row">
           <div class="tile-icon-wrap">
             <img src="npc-tinkmaster.png" alt="デカヌおやかた"
@@ -1164,15 +1201,16 @@ hr.dash {
           <div class="tile-info">
             <div class="tile-name-en">Tinkmaster / デカヌおやかた</div>
             <div class="tile-name-jp">キラキラうきしまエリア</div>
-            <div class="tile-effect-en">Draw 1 Encounter Card + 2 Material Coins from the pile!</div>
+            <div class="tile-effect-en">Draw 1 Encounter Card from the pile + receive 2 Material Coins!</div>
             <div class="tile-effect-jp">山からであいカードを1枚引く + そざいコイン2枚もらう！</div>
-            <span class="tile-badge badge-purple">+1 card +2 coins / カード+コイン+2</span>
+            <span class="tile-badge badge-purple">+card +2 coins / カード+コイン+2</span>
           </div>
         </div>
 
       </div>
     </div>
 
+    <!-- ── SECTION 3: ENCOUNTER CARDS ── -->
     <div class="rules-section">
       <div class="rules-section-header" onclick="toggleSection(this)">
         <span class="section-header-icon">
@@ -1184,7 +1222,7 @@ hr.dash {
       </div>
       <div class="rules-section-body">
         <div style="font-size:0.80rem; font-weight:700; color:var(--green-dark); margin-bottom:10px;">
-          Start with 3 to 5 Encounter Cards.<br>
+          Each player starts with a hand of Encounter Cards (3–5 depending on player count).<br>
           <span style="font-weight:500; color:var(--brown);">各プレイヤーはであいカードを3〜5枚持ってスタート（人数による）。</span>
         </div>
 
@@ -1208,14 +1246,14 @@ hr.dash {
         <div class="enc-info-row">
           <div class="enc-dot" style="background:#7a50b8;"></div>
           <div class="enc-text">
-            <div class="e-en"><b>2.</b> Pay the coins (put them in the middle).</div>
+            <div class="e-en"><b>2.</b> Pay the material cost shown on the card (return coins to the pile).</div>
             <div class="e-jp">カードに書いてあるコスト分のそざいコインを山に戻す。</div>
           </div>
         </div>
         <div class="enc-info-row">
           <div class="enc-dot" style="background:#7a50b8;"></div>
           <div class="enc-text">
-            <div class="e-en"><b>3.</b> Do the challenge on the card. Try your best = success!</div>
+            <div class="e-en"><b>3.</b> Do the English challenge on the card. Try your best — trying = success!</div>
             <div class="e-jp">カードの英語チャレンジをやる。やってみることが大事！</div>
           </div>
         </div>
@@ -1234,7 +1272,7 @@ hr.dash {
           </div>
         </div>
         <div style="margin-top:10px; padding:8px 12px; background:var(--red-pale); border-radius:12px;">
-          <div style="font-size:0.75rem; font-weight:900; color:#881010;">⚠️ Not enough coins? / 払えるカードがない？</div>
+          <div style="font-size:0.75rem; font-weight:900; color:#881010;">⚠️ Can't afford any card? / 払えるカードがない？</div>
           <div style="font-size:0.72rem; color:#881010; margin-top:3px; line-height:1.5;">
             If you can't pay for any Encounter Card in your hand, your turn ends without playing one. Try to collect more coins next time!<br>
             <span style="opacity:0.85;">手持ちのどのカードも払えない場合は、そのままターン終了。次にそざいコインをもっと集めよう！</span>
@@ -1250,13 +1288,14 @@ hr.dash {
           <div style="font-size:0.75rem; color:#444; margin-top:6px; line-height:1.6;">
             🔄 <b>Swap with the pile</b> — return 1 card, draw 1 new card.<br>
             <span style="color:var(--brown); font-size:0.70rem;">山と交換 — 1枚戻して1枚引く。</span><br>
-            🤝 <b>Trade with a player</b> — swap 1 card with someone.<br>
+            🤝 <b>Steal from a player</b> — swap 1 card with another player's hand.<br>
             <span style="color:var(--brown); font-size:0.70rem;">他の人と交換 — 1枚交換する。</span>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- ── SECTION 4: POKÉMON CENTER ── -->
     <div class="rules-section">
       <div class="rules-section-header" onclick="toggleSection(this)">
         <span class="section-header-icon">
@@ -1268,6 +1307,7 @@ hr.dash {
       </div>
       <div class="rules-section-body">
 
+        <!-- Building kit image placeholder -->
         <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; padding:10px 12px; background:#f0ece0; border-radius:14px;">
           <div style="width:64px; height:64px; border-radius:12px; overflow:hidden; flex-shrink:0; border:2px solid rgba(160,130,60,0.2);">
             <img src="pokecen-kit.png" alt="ポケモンセンター建築キット" style="width:100%;height:100%;object-fit:cover;"
@@ -1276,8 +1316,8 @@ hr.dash {
           <div>
             <div style="font-size:0.82rem; font-weight:900; color:#444;">Pokémon Center Building Kit Tile</div>
             <div style="font-size:0.70rem; color:var(--brown); margin-top:2px;">ポケモンセンター<ruby>建築<rt>けんちく</rt></ruby>キットタイル</div>
-            <div style="font-size:0.72rem; color:#666; margin-top:3px; line-height:1.4;">Second-to-last tile.</div>
-            <div style="font-size:0.65rem; color:var(--brown);">ゴールの一つ前のタイル。</div>
+            <div style="font-size:0.72rem; color:#666; margin-top:3px; line-height:1.4;">Second-to-last tile. The completed Pokémon Center is at GOAL!</div>
+            <div style="font-size:0.65rem; color:var(--brown);">ゴールの一つ前のタイル。<ruby>完成<rt>かんせい</rt></ruby>したポケモンセンターはゴールにある！</div>
           </div>
         </div>
 
@@ -1291,14 +1331,14 @@ hr.dash {
         <div class="poke-center-check">
           <div class="check-icon"><img src="section-encounter.png" alt="Encounter Card" onerror="this.outerHTML='🃏'"></div>
           <div>
-            <div class="check-en">Total face-up cards = number of players (or more)</div>
-            <div class="check-jp">みんなの表向きカードの合計が、プレイヤーの数以上</div>
+            <div class="check-en">Total face-up Encounter Cards ≥ number of players</div>
+            <div class="check-jp"><ruby>全員<rt>ぜんいん</rt></ruby>の<ruby>表向<rt>おもてむ</rt></ruby>きであいカード<ruby>合計<rt>ごうけい</rt></ruby> ≥ プレイヤーの人数</div>
           </div>
         </div>
         <div class="poke-center-check">
           <div class="check-icon"><img src="tab-material.png" alt="Material Coin" onerror="this.outerHTML='🪙'"></div>
           <div>
-            <div class="check-en">Everyone pays 2 coins</div>
+            <div class="check-en">Every player contributes 2 Material Coins</div>
             <div class="check-jp"><ruby>全員<rt>ぜんいん</rt></ruby>がそざいコインを2枚ずつ出す</div>
           </div>
         </div>
@@ -1321,6 +1361,7 @@ hr.dash {
       </div>
     </div>
 
+    <!-- ── SECTION 5: SCORING ── -->
     <div class="rules-section">
       <div class="rules-section-header" onclick="toggleSection(this)">
         <span class="section-header-icon">
@@ -1357,7 +1398,11 @@ hr.dash {
       </div>
     </div>
 
-  </div></div><div class="win-overlay" id="win-overlay">
+  </div><!-- end rules-wrap -->
+  </div><!-- end rules tab -->
+
+<!-- ══ WIN OVERLAY ══ -->
+<div class="win-overlay" id="win-overlay">
   <div class="win-stars">🌟</div>
   <div class="win-title">YOU WIN!</div>
   <div class="win-jp">みんなの勝利！🎉</div>
@@ -1365,7 +1410,9 @@ hr.dash {
   <button class="win-close" onclick="closeWin()">Continue / つづける</button>
 </div>
 
-</div><script>
+</div><!-- .app -->
+
+<script>
 /* ═══════════════════════════════════════
    DITTO DECK DATA
 ═══════════════════════════════════════ */
@@ -1374,49 +1421,50 @@ hr.dash {
 ═══════════════════════════════════════ */
 const EASY_DECK_RAW = [
   // ── Read it! — 3-letter words ──
-  { cat:"📖 Read it!", en:'Read this word!', word:'CAT', jp:'この言葉を声に出して読もう！', answer:'キャットゥ', effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'Read this word!', word:'DOG', jp:'この言葉を声に出して読もう！', answer:'ドッグ',     effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'Read this word!', word:'PIG', jp:'この言葉を声に出して読もう！', answer:'ピッグ',     effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'CAT', jp:'この言葉を声に出して読もう！', answer:'キャットゥ', effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'DOG', jp:'この言葉を声に出して読もう！', answer:'ドッグ',     effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'PIG', jp:'この言葉を声に出して読もう！', answer:'ピッグ',     effect:"+1", effectVal:1, type:"plus" },
   // ── Read it! — single letters ──
-  { cat:"📖 Read it!", en:'What letter is this?', word:'A', jp:'この文字は何？', answer:'エイ',       effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'What letter is this?', word:'b', jp:'この文字は何？', answer:'ビー',       effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'What letter is this?', word:'d', jp:'この文字は何？', answer:'ディー',     effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'What letter is this?', word:'p', jp:'この文字は何？', answer:'ピー',       effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'What letter is this?', word:'q', jp:'この文字は何？', answer:'キュー',     effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'What letter is this?', word:'m', jp:'この文字は何？', answer:'エム',       effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'What letter is this?', word:'n', jp:'この文字は何？', answer:'エヌ',       effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'What letter is this?', word:'w', jp:'この文字は何？', answer:'ダブリュー', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'A', jp:'この文字は何？', answer:'エイ',       effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'b', jp:'この文字は何？', answer:'ビー',       effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'d', jp:'この文字は何？', answer:'ディー',     effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'p', jp:'この文字は何？', answer:'ピー',       effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'q', jp:'この文字は何？', answer:'キュー',     effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'m', jp:'この文字は何？', answer:'エム',       effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'n', jp:'この文字は何？', answer:'エヌ',       effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'What letter is this?', word:'w', jp:'この文字は何？', answer:'ダブリュー', effect:"+1", effectVal:1, type:"plus" },
   // ── English for this? ──
-  { cat:"🤔 English for this?", en:"What's this?", word:'⭐', jp:'これは英語で何？', answer:'Star!<br>スター',              effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🩷', jp:'これは英語で何？', answer:'Heart!<br>ハート',             effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🍅', jp:'これは英語で何？', answer:'Tomato!<br>トメイト',          effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🍄‍🟫', jp:'これは英語で何？', answer:'Mushroom!<br>マッシュルーム', effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🥦', jp:'これは英語で何？', answer:'Broccoli!<br>ブロッコリー',    effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🍒', jp:'これは英語で何？', answer:'Cherry!<br>チェリー',          effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🍌', jp:'これは英語で何？', answer:'Banana!<br>バナナ',            effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🍔', jp:'これは英語で何？', answer:'Hamburger!<br>ハンバーガー',   effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🍕', jp:'これは英語で何？', answer:'Pizza!<br>ピッツァ',           effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🍰', jp:'これは英語で何？', answer:'Cake!<br>ケーキ',              effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🍮', jp:'これは英語で何？', answer:'Pudding!<br>プディング',       effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"What's this?", word:'🍦', jp:'これは英語で何？', answer:'Ice cream!<br>アイスクリーム', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'⭐', jp:'これは英語で何？', answer:'Star!<br>スター',              effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🩷', jp:'これは英語で何？', answer:'Heart!<br>ハート',             effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍅', jp:'これは英語で何？', answer:'Tomato!<br>トメイト',          effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍄‍🟫', jp:'これは英語で何？', answer:'Mushroom!<br>マッシュルーム', effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🥦', jp:'これは英語で何？', answer:'Broccoli!<br>ブロッコリー',    effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍒', jp:'これは英語で何？', answer:'Cherry!<br>チェリー',          effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍌', jp:'これは英語で何？', answer:'Banana!<br>バナナ',            effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍔', jp:'これは英語で何？', answer:'Hamburger!<br>ハンバーガー',   effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍕', jp:'これは英語で何？', answer:'Pizza!<br>ピッツァ',           effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍰', jp:'これは英語で何？', answer:'Cake!<br>ケーキ',              effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍮', jp:'これは英語で何？', answer:'Pudding!<br>プディング',       effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What's this?", word:'🍦', jp:'これは英語で何？', answer:'Ice cream!<br>アイスクリーム', effect:"+1", effectVal:1, type:"plus" },
   // ── Say it! ──
-  { cat:"💬 Say it!", en:"How are you?\n\nAnswer in English!", jp:"今の気持ちを英語で言おう！",   hint:"I'm happy / tired / hungry!", effect:"+5", effectVal:5, type:"plus" },
-  { cat:"💬 Say it!", en:"Say one Pokémon you like!",          jp:"好きなポケモンを英語で言おう！", hint:"I like ___!",                 effect:"+5", effectVal:5, type:"plus" },
+  { cat:"💬 Say it!", en:"How are you?\n\nAnswer in English!", jp:"今の気持ちを英語で言おう！",   hint:"I'm happy / tired / hungry!", effect:"+1", effectVal:1, type:"plus" },
+  { cat:"💬 Say it!", en:"Say one Pokémon you like!",          jp:"好きなポケモンを英語で言おう！", hint:"I like ___!",                 effect:"+1", effectVal:1, type:"plus" },
   // ── Ask a friend! ──
-  { cat:"🙋 Ask a friend!", en:'Ask anyone:\n\n"How are you?"',                   jp:'誰かに聞こう：\n\n「How are you?」',                        effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask a friend!", en:'Ask the teacher:\n\n"How are you?"',              jp:'先生に聞こう：\n\n「How are you?」',                        effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask a friend!", en:'Ask a friend:\n\n"What Pokémon do you like?"',    jp:'友だちに聞こう：\n\n「What Pokémon do you like?」\n好きなポケモンは何ですか？',  effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask a friend!", en:'Ask the teacher:\n\n"What Pokémon do you like?"', jp:'先生に聞こう：\n\n「What Pokémon do you like?」\n好きなポケモンは何ですか？',    effect:"+5", effectVal:5, type:"plus" },
+  { cat:"✊ Janken!", en:"Janken with anyone!\n\nWinner gets 2 material coins!",   jp:"誰かとじゃんけん！\n\n勝った人はそざいコイン2枚もらう！",          effect:"Special!", effectVal:0, type:"special" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 3 material coins!",                       jp:"ラッキー！\n\nそざいコインを3枚もらおう！",                      effect:"+3 coins",   effectVal:0, type:"lucky" },
+  { cat:"🙋 Ask a friend!", en:'Ask a friend:\n\n"What Pokémon do you like?"',    jp:'友だちに聞こう：\n\n「What Pokémon do you like?」\n好きなポケモンは何ですか？',  effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🙋 Ask a friend!", en:'Ask the teacher:\n\n"What Pokémon do you like?"', jp:'先生に聞こう：\n\n「What Pokémon do you like?」\n好きなポケモンは何ですか？',    effect:"+1", effectVal:1, type:"plus" },
   // ── Special! ──
-  { cat:"⭐ Special!", en:"Everyone count to 10 in English together!", jp:"みんなで英語で１〜10を数えよう！", effect:"+5", effectVal:5, type:"plus" },
-  { cat:"⭐ Special!", en:"Everyone strike a pose! 📸",                jp:"みんなポーズ！📸",                effect:"+5", effectVal:5, type:"plus" },
+  { cat:"⭐ Special!", en:"Everyone count to 10 in English together!", jp:"みんなで英語で１〜10を数えよう！", effect:"+1", effectVal:1, type:"plus" },
+  { cat:"⭐ Special!", en:"Everyone strike a pose! 📸",                jp:"みんなポーズ！📸",                effect:"+1", effectVal:1, type:"plus" },
   // ── Count the board! ──
-  { cat:"🔢 Count the board!", en:"Count the ❗ Ditto tiles!",     jp:"ボードの❗メタモンタイルをかぞえよう！\n\nいくつある？", effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🔢 Count the board!", en:"Count the Professor Tangrowth circles!", jp:"ボードのモジャンボはかせをかぞえよう！\n\nいくつある？", effect:"+5", effectVal:5, type:"plus" },
+  { cat:"😱 Oops!", en:"Oops!\n\nGive 2 material coins to the player with the fewest coins!", jp:"あらら！\n\nコインが一番少ない人にそざいコイン2枚わたそう！", effect:"Special!", effectVal:0, type:"special" },
+  { cat:"🔢 Count the board!", en:"Count all the Professor Tangrowth circles on the board!\n\nHow many?", jp:"ボードのモジャンボはかせをかぞえよう！\n\nいくつある？", effect:"+1", effectVal:1, type:"plus" },
   // ── Janken! ──
   { cat:"✊ Janken!", en:"Janken with anyone!\n\nWinner gets 1 material coin!",                         jp:"誰かとじゃんけん！\n\n勝った人はそざいコイン1枚もらう！",           effect:"Special!", effectVal:0, type:"special" },
   { cat:"✊ Janken!", en:"Everyone janken!\n\nWinner gets 1 material coin AND 1 Encounter Card!",       jp:"みんなでじゃんけん！\n\n<ruby>優勝<rt>ゆうしょう</rt></ruby>した人はそざいコイン1枚＋であいカード1枚！", effect:"Special!", effectVal:0, type:"special" },
   { cat:"✊ Janken!", en:"Janken with anyone!\n\nLoser gives the winner 1 material coin!",              jp:"誰かとじゃんけん！\n\n負けた人は勝った人にそざいコイン1枚わたす！",   effect:"Special!", effectVal:0, type:"special" },
+  { cat:"✊ Janken!", en:"Janken with anyone!\n\nWinner gets 2 material coins!",                        jp:"誰かとじゃんけん！\n\n勝った人はそざいコインを2枚もらう！",           effect:"Special!", effectVal:0, type:"special" },
   // ── Lucky! ──
   { cat:"🍀 Lucky!", en:"Lucky!\n\nDraw 1 Encounter Card into your hand!", jp:"ラッキー！\n\nであいカードを1枚引こう！",   effect:"Draw card!", effectVal:0, type:"lucky" },
   { cat:"🍀 Lucky!", en:"Lucky!\n\nDraw 1 Encounter Card into your hand!", jp:"ラッキー！\n\nであいカードを1枚引こう！",   effect:"Draw card!", effectVal:0, type:"lucky" },
@@ -1424,8 +1472,7 @@ const EASY_DECK_RAW = [
   { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 1 material coin!",                 jp:"ラッキー！\n\nそざいコインを1枚もらおう！", effect:"+1 coin",    effectVal:0, type:"lucky" },
   { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 2 material coins!",                jp:"ラッキー！\n\nそざいコインを2枚もらおう！", effect:"+2 coins",   effectVal:0, type:"lucky" },
   { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 2 material coins!",                jp:"ラッキー！\n\nそざいコインを2枚もらおう！", effect:"+2 coins",   effectVal:0, type:"lucky" },
-  { cat:"🍀 Lucky!", en:"Lucky!\n\nGauge goes up!",                        jp:"ラッキー！\n\nゲージがあがる！",           effect:"+5",         effectVal:5, type:"plus" },
-  { cat:"🍀 Lucky!", en:"Lucky!\n\nGauge goes up!",                        jp:"ラッキー！\n\nゲージがあがる！",           effect:"+5",         effectVal:5, type:"plus" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 3 material coins!",                jp:"ラッキー！\n\nそざいコインを3枚もらおう！", effect:"+3 coins",   effectVal:0, type:"lucky" },
   // ── Swap! ──
   { cat:"🔄 Swap!", en:"Swap one Encounter Card\nwith another player!", jp:"であいカードを誰かと\n1枚交換しよう！", effect:"Swap cards", effectVal:0, type:"swap" },
   { cat:"🔄 Swap!", en:"Swap one Encounter Card\nwith the pile!",       jp:"であいカードを山と\n1枚交換しよう！",   effect:"Swap cards", effectVal:0, type:"swap" },
@@ -1434,6 +1481,7 @@ const EASY_DECK_RAW = [
   { cat:"😱 Oops!", en:"A storm came!\n\nGauge −5…",                                jp:"嵐が来た！\n\nゲージ−5…",                     effect:"−5",       effectVal:-5, type:"minus" },
   { cat:"😱 Oops!", en:"Oops!\n\nGive 1 material coin to the player on your left!", jp:"あらら！\n\n左の人にそざいコイン1枚わたそう！", effect:"Special!", effectVal:0,  type:"special" },
   { cat:"😱 Oops!", en:"Uh oh!\n\nEveryone loses 1 material coin…",                 jp:"あらら！\n\nみんなそざいコインを1枚返そう…",   effect:"Special!", effectVal:0,  type:"special" },
+  { cat:"😱 Oops!", en:"Oops!\n\nGive 1 material coin to the player with the fewest coins!", jp:"あらら！\n\nコインが一番少ない人にそざいコインを1枚わたそう！", effect:"Special!", effectVal:0, type:"special" },
 ];
 
 /* ═══════════════════════════════════════
@@ -1441,84 +1489,84 @@ const EASY_DECK_RAW = [
 ═══════════════════════════════════════ */
 const HARD_DECK_RAW = [
   // ── Read it! ──
-  { cat:"📖 Read it!", en:'Read this word!', word:'BEAUTIFUL',  jp:'この言葉を読もう！', effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'Read this word!', word:'DELICIOUS',  jp:'この言葉を読もう！', effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'Read this word!', word:'ADVENTURE',  jp:'この言葉を読もう！', effect:"+5", effectVal:5, type:"plus" },
-  { cat:"📖 Read it!", en:'Read this word!', word:'FRIENDSHIP', jp:'この言葉を読もう！', effect:"+5", effectVal:5, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'BEAUTIFUL',  jp:'この言葉を読もう！', effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'DELICIOUS',  jp:'この言葉を読もう！', effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'ADVENTURE',  jp:'この言葉を読もう！', effect:"+1", effectVal:1, type:"plus" },
+  { cat:"📖 Read it!", en:'Read this word out loud!', word:'FRIENDSHIP', jp:'この言葉を読もう！', effect:"+1", effectVal:1, type:"plus" },
   // ── English for this? ──
-  { cat:"🤔 English for this?", en:"How do you say 理科 in English?",    jp:"理科は英語で何？",   answer:"Science! / 理科！",       effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"How do you say 社会 in English?",    jp:"社会は英語で何？",   answer:"Social Studies! / 社会！",effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🤔 English for this?", en:"How do you say 冬 in English?",jp:"冬は英語で何？",    answer:"Winter! / 冬！",          effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🤔 English for this?", en:"What is 理科 in English?",    jp:"理科は英語で何？",   answer:"Science! / 理科！",       effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What is 社会 in English?",    jp:"社会は英語で何？",   answer:"Social Studies! / 社会！",effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🤔 English for this?", en:"What season is 冬 in English?",jp:"冬は英語で何？",    answer:"Winter! / 冬！",          effect:"+1", effectVal:1, type:"plus" },
   // ── Say it! ──
   { cat:"💬 Say it!", en:"What is your favorite season?\n\nWhy?",
     jp:"好きな<ruby>季節<rt>きせつ</rt></ruby>は？\n\nなぜ？",
-    hint:"My favorite season is ___ because ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"My favorite season is ___ because ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"Name 3 Pokémon that live in the ocean!",
     jp:"<ruby>海<rt>うみ</rt></ruby>にすむポケモンを3匹言おう！",
-    hint:"___, ___, and ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"___, ___, and ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"Describe what you're wearing today!\n\nUse 2 colors!",
     jp:"今日の<ruby>服装<rt>ふくそう</rt></ruby>を英語で言おう！\n\n色を2つ使って！",
-    hint:"I'm wearing ___ and ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"I'm wearing ___ and ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"What did you eat today?",
     jp:"今日は何を食べた？",
-    hint:"I ate ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"I ate ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"Say something you can do really well!",
     jp:"<ruby>得意<rt>とくい</rt></ruby>なことを英語で言おう！",
-    hint:"I can ___ very well!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"I can ___ very well!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"Name 3 things you can see right now!",
     jp:"今、見えるものを3つ英語で言おう！",
-    hint:"I can see ___, ___, and ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"I can see ___, ___, and ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"What is your favorite Pokémon?\n\nWhy?",
     jp:"好きなポケモンは？\n\nなぜ？",
-    hint:"My favorite is ___ because ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"My favorite is ___ because ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"Where do you want to go?\n\nWhy?",
     jp:"どこに行きたい？\n\nなぜ？",
-    hint:"I want to go to ___ because ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"I want to go to ___ because ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"What is one thing you're good at?",
     jp:"<ruby>得意<rt>とくい</rt></ruby>なことを一つ言おう！",
-    hint:"I'm good at ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"I'm good at ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"What is something you do every day?",
     jp:"<ruby>毎日<rt>まいにち</rt></ruby>することを英語で言おう！",
-    hint:"I always / usually ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"I always / usually ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"Name a cute Pokémon!",
     jp:"かわいいポケモンを言おう！",
-    hint:"___ is cute!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"___ is cute!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"Name a cool Pokémon!",
     jp:"かっこいいポケモンを言おう！",
-    hint:"___ is cool!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"___ is cool!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"If you could be any Pokémon, which one?\n\nWhy?",
     jp:"もしポケモンになれるなら？\n\nなぜ？",
-    hint:"I would be ___ because ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"I would be ___ because ___!", effect:"+1", effectVal:1, type:"plus" },
   { cat:"💬 Say it!", en:"What is your best memory from this year?",
     jp:"今年の一番の思い出は？",
-    hint:"My best memory is ___!", effect:"+5", effectVal:5, type:"plus" },
+    hint:"My best memory is ___!", effect:"+1", effectVal:1, type:"plus" },
   // ── Ask someone! ──
-  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What did you do today?"',         jp:'誰かに聞こう：\n\n「What did you do today?」',      hint:"I ___!",                                           effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"Can you ___?"\n\n(pick any skill!)',jp:'誰かに聞こう：\n\n「Can you ___?」\n\n（何でもOK！）', hint:"Yes, I can! / No, I can't!",                        effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What is your favorite Pokémon?"', jp:'誰かに聞こう：\n\n「What is your favorite Pokémon?」', hint:"My favorite is ___!",                              effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What season do you like?\n\nWhy?"',jp:'誰かに聞こう：\n\n「What season do you like? Why?」',  hint:"I like ___ because ___!",                          effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What can you do very well?"',     jp:'誰かに聞こう：\n\n「What can you do very well?」',     hint:"I can ___ very well!",                             effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"Where do you want to go?"',       jp:'誰かに聞こう：\n\n「Where do you want to go?」',       hint:"I want to go to ___!",                             effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What is something you eat often?"',jp:'誰かに聞こう：\n\n「What do you eat often?」',         hint:"I often eat ___!",                                 effect:"+5", effectVal:5, type:"plus" },
-  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What is your favorite color?"',   jp:'誰かに聞こう：\n\n「What is your favorite color?」',   hint:"My favorite color is ___!",                        effect:"+5", effectVal:5, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What did you do today?"',         jp:'誰かに聞こう：\n\n「What did you do today?」',      hint:"I ___!",                                           effect:"+1", effectVal:1, type:"plus" },
+  { cat:"✊ Janken!", en:"Janken with someone!\n\nWinner gets 2 material coins!",  jp:"誰かとじゃんけん！\n\n勝った人はそざいコイン2枚もらう！",          effect:"Special!", effectVal:0, type:"special" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What is your favorite Pokémon?"', jp:'誰かに聞こう：\n\n「What is your favorite Pokémon?」', hint:"My favorite is ___!",                              effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What season do you like?\n\nWhy?"',jp:'誰かに聞こう：\n\n「What season do you like? Why?」',  hint:"I like ___ because ___!",                          effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What can you do very well?"',     jp:'誰かに聞こう：\n\n「What can you do very well?」',     hint:"I can ___ very well!",                             effect:"+1", effectVal:1, type:"plus" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 3 material coins!",                       jp:"ラッキー！\n\nそざいコインを3枚もらおう！",                      effect:"+3 coins",   effectVal:0, type:"lucky" },
+  { cat:"😱 Oops!", en:"Oops!\n\nGive 2 material coins to the player with the fewest coins!", jp:"あらら！\n\nコインが一番少ない人にそざいコイン2枚わたそう！", effect:"Special!", effectVal:0, type:"special" },
+  { cat:"🙋 Ask someone!", en:'Ask someone:\n\n"What is your favorite color?"',   jp:'誰かに聞こう：\n\n「What is your favorite color?」',   hint:"My favorite color is ___!",                        effect:"+1", effectVal:1, type:"plus" },
   // ── Special! ──
-  { cat:"⭐ Special!", en:'Everyone say one word that starts with "S"!\n\nNo repeats!', jp:'「S」で始まる英語の言葉をひとつずつ言おう！\n\nかぶったらアウト！', effect:"+5", effectVal:5, type:"plus" },
-  { cat:"⭐ Special!", en:'Everyone say one word that starts with "P"!\n\nNo repeats!', jp:'「P」で始まる英語の言葉をひとつずつ言おう！\n\nかぶったらアウト！', effect:"+5", effectVal:5, type:"plus" },
-  { cat:"⭐ Special!", en:"Everyone say one Pokémon!\n\nNo repeats!",                   jp:"ポケモンを一匹ずつ言おう！\n\nかぶったらアウト！",                   effect:"+5", effectVal:5, type:"plus" },
-  { cat:"⭐ Special!", en:"Everyone strike a pose! 📸",                                 jp:"みんなポーズ！📸",                                                   effect:"+5", effectVal:5, type:"plus" },
+  { cat:"⭐ Special!", en:'Everyone say one word that starts with "S"!\n\nNo repeats!', jp:'「S」で始まる英語の言葉をひとつずつ言おう！\n\nかぶったらアウト！', effect:"+1", effectVal:1, type:"plus" },
+  { cat:"⭐ Special!", en:'Everyone say one word that starts with "P"!\n\nNo repeats!', jp:'「P」で始まる英語の言葉をひとつずつ言おう！\n\nかぶったらアウト！', effect:"+1", effectVal:1, type:"plus" },
+  { cat:"⭐ Special!", en:"Everyone say one Pokémon!\n\nNo repeats!",                   jp:"ポケモンを一匹ずつ言おう！\n\nかぶったらアウト！",                   effect:"+1", effectVal:1, type:"plus" },
+  { cat:"⭐ Special!", en:"Everyone strike a pose! 📸",                                 jp:"みんなポーズ！📸",                                                   effect:"+1", effectVal:1, type:"plus" },
   // ── Janken! ──
   { cat:"✊ Janken!", en:"Janken with someone!\n\nWinner gets 1 material coin!",                   jp:"誰かとじゃんけん！\n\n勝った人はそざいコイン1枚もらう！",           effect:"Special!", effectVal:0, type:"special" },
   { cat:"✊ Janken!", en:"Everyone janken!\n\nWinner gets 1 material coin AND 1 Encounter Card!", jp:"みんなでじゃんけん！\n\n<ruby>優勝<rt>ゆうしょう</rt></ruby>した人はそざいコイン1枚＋であいカード1枚！", effect:"Special!", effectVal:0, type:"special" },
   { cat:"✊ Janken!", en:"Janken with someone!\n\nLoser gives the winner 1 material coin!",        jp:"誰かとじゃんけん！\n\n負けた人は勝った人にそざいコイン1枚わたす！",   effect:"Special!", effectVal:0, type:"special" },
-  // ── Lucky! x2 ──
+  { cat:"✊ Janken!", en:"Janken with someone!\n\nWinner gets 2 material coins!",                  jp:"誰かとじゃんけん！\n\n勝った人はそざいコインを2枚もらう！",           effect:"Special!", effectVal:0, type:"special" },
+  // ── Lucky! ──
   { cat:"🍀 Lucky!", en:"Lucky!\n\nDraw 1 Encounter Card into your hand!", jp:"ラッキー！\n\nであいカードを1枚引こう！",   effect:"Draw card!", effectVal:0, type:"lucky" },
   { cat:"🍀 Lucky!", en:"Lucky!\n\nDraw 1 Encounter Card into your hand!", jp:"ラッキー！\n\nであいカードを1枚引こう！",   effect:"Draw card!", effectVal:0, type:"lucky" },
   { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 1 material coin!",                 jp:"ラッキー！\n\nそざいコインを1枚もらおう！", effect:"+1 coin",    effectVal:0, type:"lucky" },
   { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 1 material coin!",                 jp:"ラッキー！\n\nそざいコインを1枚もらおう！", effect:"+1 coin",    effectVal:0, type:"lucky" },
   { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 2 material coins!",                jp:"ラッキー！\n\nそざいコインを2枚もらおう！", effect:"+2 coins",   effectVal:0, type:"lucky" },
   { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 2 material coins!",                jp:"ラッキー！\n\nそざいコインを2枚もらおう！", effect:"+2 coins",   effectVal:0, type:"lucky" },
-  { cat:"🍀 Lucky!", en:"Lucky!\n\nGauge goes up!",                        jp:"ラッキー！\n\nゲージがあがる！",           effect:"+5",         effectVal:5, type:"plus" },
-  { cat:"🍀 Lucky!", en:"Lucky!\n\nGauge goes up!",                        jp:"ラッキー！\n\nゲージがあがる！",           effect:"+5",         effectVal:5, type:"plus" },
+  { cat:"🍀 Lucky!", en:"Lucky!\n\nTake 3 material coins!",                jp:"ラッキー！\n\nそざいコインを3枚もらおう！", effect:"+3 coins",   effectVal:0, type:"lucky" },
   // ── Swap! ──
   { cat:"🔄 Swap!", en:"Swap one Encounter Card\nwith another player!", jp:"であいカードを誰かと\n1枚交換しよう！", effect:"Swap cards", effectVal:0, type:"swap" },
   { cat:"🔄 Swap!", en:"Swap one Encounter Card\nwith the pile!",       jp:"であいカードを山と\n1枚交換しよう！",   effect:"Swap cards", effectVal:0, type:"swap" },
@@ -1527,6 +1575,7 @@ const HARD_DECK_RAW = [
   { cat:"😱 Oops!", en:"A storm came!\n\nGauge −5…",                                jp:"嵐が来た！\n\nゲージ−5…",                     effect:"−5",       effectVal:-5, type:"minus" },
   { cat:"😱 Oops!", en:"Oops!\n\nGive 1 material coin to the player on your left!", jp:"あらら！\n\n左の人にそざいコイン1枚わたそう！", effect:"Special!", effectVal:0, type:"special" },
   { cat:"😱 Oops!", en:"Uh oh!\n\nEveryone loses 1 material coin…",                 jp:"あらら！\n\nみんなそざいコインを1枚返そう…",   effect:"Special!", effectVal:0, type:"special" },
+  { cat:"😱 Oops!", en:"Oops!\n\nGive 1 material coin to the player with the fewest coins!", jp:"あらら！\n\nコインが一番少ない人にそざいコインを1枚わたそう！", effect:"Special!", effectVal:0, type:"special" },
 ];
 
 /* ═══════════════════════════════════════
